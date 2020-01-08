@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VivesRental.Tests.Data", "V
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VivesRental.Services.Tests", "VivesRental.Services.Tests\VivesRental.Services.Tests.csproj", "{CC38CD6A-2FAC-4732-91E1-AC1C30B305DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VivesRental.Tests.ConsoleApp", "VivesRental.Tests.ConsoleApp\VivesRental.Tests.ConsoleApp.csproj", "{849885E3-7586-4DBF-8704-22C699B42DD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VivesRental.Tests.ConsoleApp", "VivesRental.Tests.ConsoleApp\VivesRental.Tests.ConsoleApp.csproj", "{849885E3-7586-4DBF-8704-22C699B42DD4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentalFrontend", "RentalFrontend\RentalFrontend.csproj", "{8177646F-D48F-4412-B103-42EAF9BD44D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{849885E3-7586-4DBF-8704-22C699B42DD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{849885E3-7586-4DBF-8704-22C699B42DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{849885E3-7586-4DBF-8704-22C699B42DD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8177646F-D48F-4412-B103-42EAF9BD44D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8177646F-D48F-4412-B103-42EAF9BD44D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8177646F-D48F-4412-B103-42EAF9BD44D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8177646F-D48F-4412-B103-42EAF9BD44D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

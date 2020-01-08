@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VivesRental.Model\VivesRental.Model.csproj" />
+    <ProjectReference Include="..\VivesRental.Repository.Tests\VivesRental.Repository.Tests.csproj" />
+    <ProjectReference Include="..\VivesRental.Repository\VivesRental.Repository.csproj" />
+    <ProjectReference Include="..\VivesRental.Services.Tests\VivesRental.Services.Tests.csproj" />
+    <ProjectReference Include="..\VivesRental.Services\VivesRental.Services.csproj" />
+    <ProjectReference Include="..\VivesRental.Tests.ConsoleApp\VivesRental.Tests.ConsoleApp.csproj" />
+    <ProjectReference Include="..\VivesRental.Tests.Data\VivesRental.Tests.Data.csproj" />
+  </ItemGroup>
+
+</Project>

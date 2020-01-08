@@ -1,0 +1,33 @@
+﻿@model VivesRental.Model.Product
+@{
+    ViewData["Title"] = "Product";
+}
+
+<h1>Add Products</h1>
+
+
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Name">Naam</label>
+        <input asp-for="@Model.Name" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Description">Beschrijving</label>
+        <input asp-for="@Model.Description" type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Manufacturer">Manufacturer</label>
+        <input  asp-for="@Model.Manufacturer" type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Publisher">Publisher</label>
+        <input  asp-for="@Model.Publisher" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+    <label asp-for="@Model.RentalExpiresAfterDays">Expires after?</label>
+    <input asp-for="@Model.RentalExpiresAfterDays" type="number" class="form-group">
+    </div>
+    <input type="submit" class="btn btn-default" value="Add Product"/>
+</form>
+
