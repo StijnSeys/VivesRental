@@ -1,0 +1,17 @@
+﻿@model IList<VivesRental.Model.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<a class="btn btn-danger" asp-action="CreateProduct">New Product</a>
+
+
+@foreach (var product in Model)
+{
+    <div class="list-group">
+        <a asp-action="ProductDetails" asp-route-id="@product.Id" class="list-group-item list-group-item-action">@product.Name</a>
+    </div>
+
+}

@@ -1,0 +1,55 @@
+﻿@model VivesRental.Model.Product
+
+
+<h1>Product details</h1>
+
+<p>Info of product @Model.Name</p>
+
+<partial name="ProductPartial" model="@Model" />
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Ben je zeker dat je dit product wilt verwijderen?
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <form method="post" asp-action="Delete" asp-controller="Product">
+                    <input type="hidden" id="ProductId" name="id" />
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">nee</button>
+                    <input type="submit" class="btn btn-light" value="ja" />
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+
+    <script>
+        //JQUERRY
+        // als mijn pagina geladen is
+        $(function() {
+            //Rigistreer de click events op de delete button
+            $(".deleteButton").on("click",
+                function() {
+                    //wanneer er op de knop delete is geklikt doe....
+                    var productId = $(this).data("id");
+                    //Stop de personId id in from
+                    $("#ProductId").val(productId);
+                });
+        });
+    </script>
+}

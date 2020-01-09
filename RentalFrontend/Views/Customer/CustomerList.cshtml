@@ -1,0 +1,17 @@
+﻿@model IList<VivesRental.Model.Customer>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<a class="btn btn-danger" asp-action="Create">New Customer</a>
+
+
+@foreach (var customer in Model)
+{
+    <div class="list-group">
+        <a asp-action="CustomerDetails" asp-route-id="@customer.Id" class="list-group-item list-group-item-action">@customer.FirstName    @customer.LastName</a>
+    </div>
+
+}
