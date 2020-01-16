@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Example</title>
+    <title>Front page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -36,23 +36,44 @@
     </div>
 </div>
 
+<div class="container">
+    <div class="row ">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <form method="get">
+                <div class="panel panel-heading">
 
+                    <div class="panel-heading">Customer Login</div>
+                    <div class="panel-body">
+                        <button type="submit" class="border-0  bg-white" asp-controller="Customer" asp-action="CustomerDetails">
+                            <img src="login.png" class="img-responsive" style="width: 100%" alt="Image">
+                        </button>
+                    </div>
+                    <div class="panel-footer ">
+                        <label asp-for="CustomerId">Scan CustomerId:</label>
+                        <input type="text" asp-for="CustomerId" value="" />
+                    </div>
+                    @if (@Model.Error == 1)
+                    {
+                        <span class="text-danger">@Model.Message</span>
+                    }
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+    </div>
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
             <form method="get">
                 <div class="panel panel-heading">
-                    <div class="panel-heading">Customer Login</div>
+                    <div class="panel-heading">Order Beheer</div>
                     <div class="panel-body">
-                        <button type="submit" class="border-0" asp-controller="Customer" asp-action="CustomerDetails">
-                            <img src="login.png" class="img-responsive" style="width: 100%" alt="Image">
+                        <button type="submit" class="border-0 bg-white" asp-controller="Order" asp-action="">
+                            <img src="order.png" class="img-responsive" style="width: 100%" alt="Image">
                         </button>
                     </div>
-                    <div class="panel-footer">
-                        <label asp-for="CustomerId">CustomerId</label>
-                        <input type="text" asp-for="CustomerId"/>
-                    </div>
-                    <span asp-validation-for="CustomerId" class="text-danger"></span>
                 </div>
             </form>
         </div>
@@ -69,7 +90,7 @@
         </div>
         <div class="col-sm-4">
             <div class="panel panel-heading">
-                <div class="panel-heading">Product Beheer</div>
+                <div class="panel-heading">Stock Beheer</div>
                 <div class="panel-body">
                     <a asp-controller="Product" asp-action="Index">
                         <img src="inventory.png" class="img-responsive" style="width: 100%" alt="Image">

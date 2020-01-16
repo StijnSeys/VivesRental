@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using VivesRental.Model;
 using VivesRental.Repository.Results;
 
@@ -7,6 +8,10 @@ namespace RentalFrontend.Models
 {
     public class CustomerOrderViewModel
     {
+
+        public bool IsTrue { get; set; }
+        public int Error { get; set; }
+        public string Message { get; set; }
         public Guid CustomerId { get; set; }
 
         public IList<ProductResult> ProductResults { get; set; }
@@ -18,8 +23,6 @@ namespace RentalFrontend.Models
         public Article Article { get; set; }
 
         public Product Product { get; set; }
-
-        public OrderLine OrderLine { get; set; }
 
         public IList<Article> AvailableArticles { get; set; }
 

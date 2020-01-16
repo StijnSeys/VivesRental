@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using RentalFrontend.Models;
 using RentalFrontend.TempData;
 using VivesRental.Model;
@@ -111,13 +112,14 @@ namespace RentalFrontend.Controllers
         {
             model.Order = _orderService.Create(model.Customer.Id);
 
-
             var articles = _databaseContext.Articles;
             IList<Guid> articleIdS = articles.Select(article => article.Id).ToList();
             _orderLineService.Rent(model.Order.Id, articleIdS);
 
-            _databaseContext.Articles = new List<Article>();
+            _databaseContext.Articles = new List<Article>(); 
+            
             return RedirectToAction("CustomerDetails", "Customer", new {CustomerID = model.Customer.Id});
+
         }
 
 

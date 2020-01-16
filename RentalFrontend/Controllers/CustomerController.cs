@@ -37,13 +37,22 @@ namespace RentalFrontend.Controllers
         public IActionResult CustomerDetails(CustomerOrderViewModel model)
         {
             var customer = _customerService.Get(model.CustomerId);
+
+            if (customer == null)
+            {
+                return RedirectToAction("Index", "Home",new{customerfound = 1});
+            }
+
             var orders = _orderService.All();
 
             IList<Order> customerOrders = new List<Order>();
             if (customer.Orders.Count > 0)
                 foreach (var order in orders)
                 {
-                    order.OrderLines = _orderLineService.FindByOrderId(order.Id);
+                    var customerOrderLines = _orderLineService.FindByOrderId(order.Id);
+                    order.OrderLines = customerOrderLines;
+
+                    //no empty orders
                     if (order.CustomerId == model.CustomerId && order.OrderLines.Count > 0) customerOrders.Add(order);
                 }
 

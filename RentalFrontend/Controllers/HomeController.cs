@@ -14,9 +14,30 @@ namespace RentalFrontend.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int customerFound)
         {
-            return View();
+            if (customerFound == 1)
+            {
+                CustomerOrderViewModel vm = new CustomerOrderViewModel()
+                {
+                    Message = "Customer not found",
+                    Error = customerFound
+                };
+
+                return View(vm);
+            }
+
+            else
+            {
+                CustomerOrderViewModel vm = new CustomerOrderViewModel()
+                {
+                    Message = "",
+                    Error = 2
+                };
+
+                return View(vm);
+            }
+            
         }
 
         public IActionResult Privacy()

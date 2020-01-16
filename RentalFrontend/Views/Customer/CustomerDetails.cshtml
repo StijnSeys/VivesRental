@@ -1,10 +1,10 @@
 ﻿@model CustomerOrderViewModel
 
-<h1>Customer details</h1>
+<h1 style="text-align: center">Customer page</h1>
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-md-auto">
-            <div class="card" style="width: 36rem;">
+            <div class="card border-0 p-3 mt-3" style="width: 36rem;">
                 <div class="card-header">
                     <form>
                         <input type="hidden" asp-for="Customer.Id" value="@Model.Customer.Id"/>
@@ -33,13 +33,41 @@
 
                         @foreach (var order in Model.Customer.Orders.OrderByDescending(order => order.CreatedAt))
                         {
-                            <form>
-                                <label asp-for="Order.Id">ID:</label>
-                                <input type="text" readonly class="form-control-plaintext" asp-for="Order.Id" value="@order.Id"/>
-                                <label for="createTime">Created:</label>
-                                <input type="text" readonly class="form-control-plaintext" id="createTime" value="@order.CreatedAt"/>
-                                <button type="submit" asp-controller="Order" asp-action="GetOrder" class="btn btn-primary list-group-item ">Order Info</button>
-                            </form>
+                           var notDone = new bool();
+                            @foreach (var orderline in order.OrderLines)
+                            {
+                                if (orderline.ReturnedAt == null)
+                                {
+                                    notDone = true;
+                                }
+                            }
+                            if (notDone)
+                                {
+                                    <div class="rounded border p-3 mt-3" style="background-color: lightcoral">
+                                        <form>
+                                            <p style="text-align: center">Not fully returned</p>
+                                            <label asp-for="Order.Id">Order Id:</label>
+                                            <input type="text" readonly class="form-control-plaintext" asp-for="Order.Id" value="@order.Id"/>
+                                            <label for="createTime">Created:</label>
+                                            <input type="text" readonly class="form-control-plaintext" id="createTime" value="@order.CreatedAt"/>
+                                            <button type="submit" asp-controller="Order" asp-action="GetOrder" class="btn btn-primary list-group-item ">Extra Info</button>
+                                        </form>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class=" rounded border p-3 mt-3" style="background-color: lightgreen">
+                                        <form>
+                                            <p style="text-align: center">Returned</p>
+                                            <label asp-for="Order.Id">ID:</label>
+                                            <input type="text" readonly class="form-control-plaintext" asp-for="Order.Id" value="@order.Id" />
+                                            <label for="createTime">Created:</label>
+                                            <input type="text" readonly class="form-control-plaintext" id="createTime" value="@order.CreatedAt" />
+                                            <button type="submit" asp-controller="Order" asp-action="GetOrder" class="btn btn-primary list-group-item ">Extra Info</button>
+                                        </form>
+                                    </div>
+                                }
+                            
                         }
                     </div>
                 </div>

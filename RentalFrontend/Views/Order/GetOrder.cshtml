@@ -5,7 +5,9 @@
 <div class="list-group">
     @foreach (var orderLine in Model.OrderLines)
     {
-        <p>Product: @orderLine.ProductName</p>
+        <div>
+            <p>Article: @orderLine.ProductName</p>
+        </div>
 
         @if (orderLine.ReturnedAt.HasValue)
         {
