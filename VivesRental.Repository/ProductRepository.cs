@@ -12,7 +12,7 @@ using VivesRental.Repository.Results;
 
 namespace VivesRental.Repository
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository :IProductRepository
     {
         private readonly IVivesRentalDbContext _context;
 
@@ -22,14 +22,14 @@ namespace VivesRental.Repository
         }
 
         public Product Get(Guid id, ProductIncludes includes = null)
-        {
+	    {
             return _context.Products
                 .AddIncludes(includes)
                 .FirstOrDefault(i => i.Id == id);
         }
 
         public IEnumerable<Product> GetAll(ProductIncludes includes = null)
-        {
+		{
             return _context.Products
                 .AddIncludes(includes)
                 .AsEnumerable();
@@ -44,15 +44,14 @@ namespace VivesRental.Repository
         }
 
         public IEnumerable<Product> Find(Expression<Func<Product, bool>> predicate, ProductIncludes includes = null)
-        {
+		{
             return _context.Products
                 .AddIncludes(includes)
                 .Where(predicate)
                 .AsEnumerable();
         }
 
-        public IEnumerable<ProductResult> FindResult(Expression<Func<Product, bool>> predicate,
-            ProductIncludes includes = null)
+        public IEnumerable<ProductResult> FindResult(Expression<Func<Product, bool>> predicate, ProductIncludes includes = null)
         {
             return _context.Products
                 .AddIncludes(includes)
@@ -71,7 +70,7 @@ namespace VivesRental.Repository
             var localEntity = _context.Products.Local.SingleOrDefault(e => e.Id == id);
             if (localEntity == null)
             {
-                var entity = new Product {Id = id};
+                var entity = new Product { Id = id };
                 _context.Products.Attach(entity);
                 _context.Products.Remove(entity);
             }

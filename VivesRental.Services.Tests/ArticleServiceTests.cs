@@ -8,11 +8,11 @@ using VivesRental.Tests.Data.Factories;
 
 namespace VivesRental.Services.Tests
 {
-    [TestClass]
-    public class ArticleServiceTests
-    {
-        [TestMethod]
-        public void Remove_Deletes_Article()
+	[TestClass]
+	public class ArticleServiceTests
+	{
+		[TestMethod]
+		public void Remove_Deletes_Article()
         {
             //Arrange
             var productToAdd = ProductFactory.CreateValidEntity();
@@ -21,8 +21,7 @@ namespace VivesRental.Services.Tests
             var articleRepositoryMock = new Mock<IArticleRepository>();
 
             //Setup ArticleRepository
-            articleRepositoryMock.Setup(ir => ir.Get(It.IsAny<Guid>(), It.IsAny<ArticleIncludes>()))
-                .Returns(articleToAdd);
+            articleRepositoryMock.Setup(ir => ir.Get(It.IsAny<Guid>(), It.IsAny<ArticleIncludes>())).Returns(articleToAdd);
             articleRepositoryMock.Setup(ir => ir.Remove(It.IsAny<Guid>()));
 
             //Setup UnitOfWork
@@ -38,9 +37,9 @@ namespace VivesRental.Services.Tests
             Assert.IsTrue(result);
         }
 
-        [TestMethod]
-        public void Remove_Deletes_Article_With_OrderLines()
-        {
+		[TestMethod]
+		public void Remove_Deletes_Article_With_OrderLines()
+		{
             //Arrange
             var customer = CustomerFactory.CreateValidEntity();
             var productToAdd = ProductFactory.CreateValidEntity();
@@ -69,5 +68,5 @@ namespace VivesRental.Services.Tests
             //Assert
             Assert.IsTrue(result);
         }
-    }
+	}
 }

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using VivesRental.Model;
 using VivesRental.Repository.Core;
+using VivesRental.Repository.Includes;
 using VivesRental.Repository.Results;
 using VivesRental.Services.Contracts;
 
 namespace VivesRental.Services
 {
+
     public class OrderService : IOrderService
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -17,9 +19,14 @@ namespace VivesRental.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Order Get(Guid id)
+        public Order Get(Guid id, OrderIncludes includes = null)
         {
-            return _unitOfWork.Orders.Get(id);
+            return _unitOfWork.Orders.Get(id, includes);
+        }
+
+        public IList<OrderResult> FindByCustomerIdResult(Guid customerId, OrderIncludes includes = null)
+        {
+            return _unitOfWork.Orders.FindResult(o => o.CustomerId == customerId, includes).ToList();
         }
 
         public IList<Order> All()
@@ -40,7 +47,10 @@ namespace VivesRental.Services
         {
             var customer = _unitOfWork.Customers.Get(customerId);
 
-            if (customer == null) return null;
+            if (customer == null)
+            {
+                return null;
+            }
 
             var order = new Order
             {
@@ -54,14 +64,20 @@ namespace VivesRental.Services
 
             _unitOfWork.Orders.Add(order);
             var numberOfObjectsUpdated = _unitOfWork.Complete();
-            if (numberOfObjectsUpdated > 0) return order;
+            if (numberOfObjectsUpdated > 0)
+            {
+                return order;
+            }
             return null;
         }
 
         public bool Return(Guid orderId, DateTime returnedAt)
         {
-            var orderLines = _unitOfWork.OrderLines.Find(rol => rol.OrderId == orderId);
-            foreach (var orderLine in orderLines) orderLine.ReturnedAt = returnedAt;
+            var orderLines = _unitOfWork.OrderLines.Find(ol => ol.OrderId == orderId && !ol.ReturnedAt.HasValue);
+            foreach (var orderLine in orderLines)
+            {
+                orderLine.ReturnedAt = returnedAt;
+            }
 
             var numberOfObjectsUpdated = _unitOfWork.Complete();
             return numberOfObjectsUpdated > 0;

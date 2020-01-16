@@ -12,9 +12,8 @@ namespace VivesRental.Model
         {
             OrderLines = new List<OrderLine>();
         }
-
-        [Key] public Guid Id { get; set; }
-
+        [Key]
+        public Guid Id { get; set; }
         public Guid ProductId { get; set; }
         public Product Product { get; set; }
         public ArticleStatus Status { get; set; }

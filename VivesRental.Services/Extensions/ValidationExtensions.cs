@@ -17,7 +17,7 @@ namespace VivesRental.Services.Extensions
         {
             if (article.ProductId == Guid.Empty)
                 return false;
-
+            
             return true;
         }
 

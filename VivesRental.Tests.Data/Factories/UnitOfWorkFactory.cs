@@ -14,8 +14,7 @@ namespace VivesRental.Tests.Data.Factories
             var orderLineRepository = new OrderLineRepository(context);
 
             //Setup UnitOfWork
-            return new UnitOfWork(context, productRepository, articleRepository, orderRepository, orderLineRepository,
-                customerRepository);
+            return new UnitOfWork(context, productRepository, articleRepository, orderRepository, orderLineRepository, customerRepository);
         }
     }
 }

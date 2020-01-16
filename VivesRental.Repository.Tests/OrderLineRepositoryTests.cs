@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VivesRental.Repository.Core;
 using VivesRental.Tests.Data.Factories;
 
 namespace VivesRental.Repository.Tests

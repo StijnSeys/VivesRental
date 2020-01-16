@@ -22,12 +22,11 @@ namespace VivesRental.Repository
         public OrderLine Get(Guid id, OrderLineIncludes includes = null)
         {
             return _context.OrderLines
-                .AddIncludes(includes) //Add the where clause
+                .AddIncludes(includes)//Add the where clause
                 .FirstOrDefault(i => i.Id == id);
         }
 
-        public IEnumerable<OrderLine> Find(Expression<Func<OrderLine, bool>> predicate,
-            OrderLineIncludes includes = null)
+        public IEnumerable<OrderLine> Find(Expression<Func<OrderLine, bool>> predicate, OrderLineIncludes includes = null)
         {
             return _context.OrderLines
                 .AddIncludes(includes)
@@ -39,5 +38,6 @@ namespace VivesRental.Repository
         {
             _context.OrderLines.Add(orderLine);
         }
+
     }
 }

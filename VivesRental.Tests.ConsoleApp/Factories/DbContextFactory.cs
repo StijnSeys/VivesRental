@@ -9,9 +9,17 @@ namespace VivesRental.Tests.ConsoleApp.Factories
     {
         private static string _connectionString;
 
+        public VivesRentalDbContext CreateDbContext()
+        {
+            return CreateDbContext(null);
+        }
+
         public VivesRentalDbContext CreateDbContext(string[] args)
         {
-            if (string.IsNullOrEmpty(_connectionString)) LoadConnectionString();
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                LoadConnectionString();
+            }
 
             var builder = new DbContextOptionsBuilder<VivesRentalDbContext>();
             builder.UseSqlServer(_connectionString);
@@ -19,15 +27,10 @@ namespace VivesRental.Tests.ConsoleApp.Factories
             return new VivesRentalDbContext(builder.Options);
         }
 
-        public VivesRentalDbContext CreateDbContext()
-        {
-            return CreateDbContext(null);
-        }
-
         private static void LoadConnectionString()
         {
             var builder = new ConfigurationBuilder();
-            builder.AddJsonFile("appsettings.json", false);
+            builder.AddJsonFile("appsettings.json", optional: false);
 
             var configuration = builder.Build();
 

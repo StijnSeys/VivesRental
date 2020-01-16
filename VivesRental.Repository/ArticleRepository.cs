@@ -13,12 +13,11 @@ namespace VivesRental.Repository
     public class ArticleRepository : IArticleRepository
     {
         private readonly IVivesRentalDbContext _context;
-
         public ArticleRepository(IVivesRentalDbContext context)
         {
             _context = context;
         }
-
+        
         public Article Get(Guid id, ArticleIncludes includes = null)
         {
             return _context.Articles
@@ -31,7 +30,7 @@ namespace VivesRental.Repository
             var localEntity = _context.Articles.Local.SingleOrDefault(e => e.Id == id);
             if (localEntity == null)
             {
-                var entity = new Article {Id = id};
+                var entity = new Article { Id = id };
                 _context.Articles.Attach(entity);
                 _context.Articles.Remove(entity);
             }

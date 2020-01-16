@@ -9,7 +9,7 @@ namespace VivesRental.Tests.Data.Factories
         {
             return new OrderLine
             {
-                OrderId = order.Id,
+                OrderId =  order.Id,
                 Order = order,
                 ArticleId = article.Id,
                 Article = article,

@@ -17,7 +17,6 @@ namespace VivesRental.Services
         {
             _unitOfWork = unitOfWork;
         }
-
         public Article Get(Guid id)
         {
             return _unitOfWork.Articles.Get(id);
@@ -40,49 +39,61 @@ namespace VivesRental.Services
 
         public IList<Article> GetAvailableArticles()
         {
-            return _unitOfWork.Articles.Find(ri => ri.Status == ArticleStatus.Normal &&
-                                                   ri.OrderLines.All(rol => rol.ReturnedAt.HasValue)).ToList();
+            return _unitOfWork.Articles.Find(a => a.Status == ArticleStatus.Normal &&
+                                                         a.OrderLines.All(ol => ol.ReturnedAt.HasValue)).ToList();
         }
 
         public IList<Article> GetAvailableArticles(ArticleIncludes includes)
         {
-            return _unitOfWork.Articles.Find(ri => ri.Status == ArticleStatus.Normal &&
-                                                   ri.OrderLines.All(rol => rol.ReturnedAt.HasValue), includes)
-                .ToList();
+            return _unitOfWork.Articles.Find(a => a.Status == ArticleStatus.Normal &&
+                                                         a.OrderLines.All(ol => ol.ReturnedAt.HasValue), includes).ToList();
+        }
+
+        public IList<Article> GetAvailableArticles(Guid productId)
+        {
+            return _unitOfWork.Articles.Find(a => a.ProductId == productId &&
+                                                  a.Status == ArticleStatus.Normal &&
+                                                  a.OrderLines.All(ol => ol.ReturnedAt.HasValue)).ToList();
+        }
+
+        public IList<Article> GetAvailableArticles(Guid productId, ArticleIncludes includes)
+        {
+            return _unitOfWork.Articles.Find(a => a.ProductId == productId && 
+                                                  a.Status == ArticleStatus.Normal &&
+                                                  a.OrderLines.All(ol => ol.ReturnedAt.HasValue), includes).ToList();
         }
 
         public IList<Article> GetRentedArticles()
         {
             return _unitOfWork.Articles.Find(ri => ri.Status == ArticleStatus.Normal &&
-                                                   ri.OrderLines.Any(rol => !rol.ReturnedAt.HasValue)).ToList();
+                                                         ri.OrderLines.Any(rol => !rol.ReturnedAt.HasValue)).ToList();
         }
 
         public IList<Article> GetRentedArticles(ArticleIncludes includes)
         {
             return _unitOfWork.Articles.Find(ri => ri.Status == ArticleStatus.Normal &&
-                                                   ri.OrderLines.Any(rol => !rol.ReturnedAt.HasValue), includes)
-                .ToList();
+                                                         ri.OrderLines.Any(rol => !rol.ReturnedAt.HasValue), includes).ToList();
         }
 
         public IList<Article> GetRentedArticles(Guid customerId)
         {
             return _unitOfWork.Articles.Find(ri => ri.Status == ArticleStatus.Normal &&
-                                                   ri.OrderLines.Any(rol =>
-                                                       !rol.ReturnedAt.HasValue && rol.Order.CustomerId == customerId))
-                .ToList();
+                                                         ri.OrderLines.Any(rol => !rol.ReturnedAt.HasValue && rol.Order.CustomerId == customerId)).ToList();
         }
 
         public IList<Article> GetRentedArticles(Guid customerId, ArticleIncludes includes)
         {
             return _unitOfWork.Articles.Find(ri => ri.Status == ArticleStatus.Normal &&
-                                                   ri.OrderLines.Any(rol =>
-                                                       !rol.ReturnedAt.HasValue && rol.Order.CustomerId == customerId),
-                includes).ToList();
+                                                         ri.OrderLines.Any(rol => !rol.ReturnedAt.HasValue && rol.Order.CustomerId == customerId), includes).ToList();
         }
 
         public Article Create(Article entity)
         {
-            if (!entity.IsValid()) return null;
+
+            if (!entity.IsValid())
+            {
+                return null;
+            }
 
             var article = new Article
             {
@@ -93,26 +104,37 @@ namespace VivesRental.Services
             _unitOfWork.Articles.Add(article);
             var numberOfObjectsUpdated = _unitOfWork.Complete();
             if (numberOfObjectsUpdated > 0)
+            {
                 //Detach and return
                 return article;
+            }
             return null;
         }
 
         [Obsolete("Edit has been replaced by the UpdateStatus method. Use the UpdateStatus method in stead.")]
         public Article Edit(Article entity)
         {
-            if (!entity.IsValid()) return null;
+            if (!entity.IsValid())
+            {
+                return null;
+            }
 
             //Get Product from unitOfWork
             var article = _unitOfWork.Articles.Get(entity.Id);
-            if (article == null) return null;
+            if (article == null)
+            {
+                return null;
+            }
 
             //Only update the properties we want to update
             article.ProductId = entity.ProductId;
             article.Status = entity.Status;
 
             var numberOfObjectsUpdated = _unitOfWork.Complete();
-            if (numberOfObjectsUpdated > 0) return entity;
+            if (numberOfObjectsUpdated > 0)
+            {
+                return entity;
+            }
             return null;
         }
 
@@ -120,7 +142,10 @@ namespace VivesRental.Services
         {
             //Get Product from unitOfWork
             var article = _unitOfWork.Articles.Get(articleId);
-            if (article == null) return false;
+            if (article == null)
+            {
+                return false;
+            }
 
             //Only update the properties we want to update
             article.Status = status;
@@ -131,7 +156,7 @@ namespace VivesRental.Services
 
         public bool Remove(Guid id)
         {
-            var article = _unitOfWork.Articles.Get(id, new ArticleIncludes {OrderLines = true});
+            var article = _unitOfWork.Articles.Get(id, new ArticleIncludes { OrderLines = true });
             if (article == null)
                 return false;
 
@@ -146,5 +171,6 @@ namespace VivesRental.Services
             var numberOfObjectsUpdated = _unitOfWork.Complete();
             return numberOfObjectsUpdated > 0;
         }
+
     }
 }

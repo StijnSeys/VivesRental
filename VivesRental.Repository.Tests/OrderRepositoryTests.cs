@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VivesRental.Repository.Core;
 using VivesRental.Tests.Data.Factories;
 
 namespace VivesRental.Repository.Tests
@@ -8,6 +9,8 @@ namespace VivesRental.Repository.Tests
     [TestClass]
     public class OrderRepositoryTests
     {
+       
+
         [TestMethod]
         public void Add_Returns_1_When_Adding_Valid_Order()
         {
@@ -82,14 +85,13 @@ namespace VivesRental.Repository.Tests
                 //Arrange
                 var customerRepository = new CustomerRepository(context);
                 var orderRepository = new OrderRepository(context);
-                for (var i = 0; i < 10; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     var customer = CustomerFactory.CreateValidEntity();
                     customerRepository.Add(customer);
                     var orderToAdd = OrderFactory.CreateValidEntity(customer);
                     orderRepository.Add(orderToAdd);
                 }
-
                 context.SaveChanges();
 
                 //Act
@@ -99,5 +101,6 @@ namespace VivesRental.Repository.Tests
                 Assert.AreEqual(10, orders.Count());
             }
         }
+        
     }
 }
