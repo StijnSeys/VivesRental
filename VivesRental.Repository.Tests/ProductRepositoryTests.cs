@@ -9,7 +9,6 @@ namespace VivesRental.Repository.Tests
     [TestClass]
     public class ProductRepositoryTests
     {
-
         [TestMethod]
         public void Add_Returns_1_When_Adding_Valid_Product()
         {
@@ -60,7 +59,7 @@ namespace VivesRental.Repository.Tests
             var productRepository = new ProductRepository(context);
 
             //Act
-            var product = productRepository.Get(Guid.NewGuid(), new ProductIncludes{ArticleOrderLines = true});
+            var product = productRepository.Get(Guid.NewGuid(), new ProductIncludes {ArticleOrderLines = true});
 
             //Assert
             Assert.IsNull(product);
@@ -108,7 +107,7 @@ namespace VivesRental.Repository.Tests
             {
                 //Act
                 var productRepository = new ProductRepository(context);
-                var product = productRepository.Get(addedProductId, new ProductIncludes { ArticleOrderLines = true });
+                var product = productRepository.Get(addedProductId, new ProductIncludes {ArticleOrderLines = true});
                 //Assert
                 Assert.IsNotNull(product);
             }
@@ -122,11 +121,12 @@ namespace VivesRental.Repository.Tests
             {
                 //Arrange
                 var productRepository = new ProductRepository(context);
-                for (int i = 0; i < 10; i++)
+                for (var i = 0; i < 10; i++)
                 {
                     var productToAdd = ProductFactory.CreateValidEntity();
                     productRepository.Add(productToAdd);
                 }
+
                 context.SaveChanges();
 
                 //Act

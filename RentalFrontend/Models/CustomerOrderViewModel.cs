@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using VivesRental.Model;
+using VivesRental.Repository.Results;
+
+namespace RentalFrontend.Models
+{
+    public class CustomerOrderViewModel
+    {
+        public Guid CustomerId { get; set; }
+
+        public IList<ProductResult> ProductResults { get; set; }
+
+        public Customer Customer { get; set; }
+
+        public Order Order { get; set; }
+
+        public Article Article { get; set; }
+
+        public Product Product { get; set; }
+
+        public OrderLine OrderLine { get; set; }
+
+        public IList<Article> AvailableArticles { get; set; }
+
+        public IList<OrderLine> OrderLines { get; set; }
+
+        public IList<Customer> AllCustomers { get; set; }
+
+        public IList<Article> OrderArticles { get; set; }
+    }
+}

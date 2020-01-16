@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
 using VivesRental.Model;
 using VivesRental.Repository;
 using VivesRental.Repository.Core;
@@ -8,16 +7,16 @@ using VivesRental.Tests.ConsoleApp.Factories;
 
 namespace VivesRental.Tests.ConsoleApp
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
             TestEdit();
             Console.ReadLine();
         }
 
-        static void TestEdit()
+        private static void TestEdit()
         {
             using var dbContext = new DbContextFactory().CreateDbContext();
 
@@ -26,10 +25,11 @@ namespace VivesRental.Tests.ConsoleApp
             var orderRepository = new OrderRepository(dbContext);
             var orderLineRepository = new OrderLineRepository(dbContext);
             var customerRepository = new CustomerRepository(dbContext);
-            var unitOfWork = new UnitOfWork(dbContext, productRepository, articleRepository, orderRepository, orderLineRepository, customerRepository);
-            
+            var unitOfWork = new UnitOfWork(dbContext, productRepository, articleRepository, orderRepository,
+                orderLineRepository, customerRepository);
+
             var productService = new ProductService(unitOfWork);
-            
+
             var articleService = new ArticleService(unitOfWork);
 
             var product = new Product
@@ -48,16 +48,13 @@ namespace VivesRental.Tests.ConsoleApp
             };
             var createdArticle = articleService.Create(article);
 
-            createdArticle.Status = ArticleStatus.Broken;
-
-            var editedArticle = articleService.Edit(createdArticle);
+            var updateStatusResult = articleService.UpdateStatus(createdArticle.Id, ArticleStatus.Broken);
 
             productService.Remove(createdProduct.Id);
         }
 
-        static void TestRemove()
+        private static void TestRemove()
         {
-
         }
     }
 }

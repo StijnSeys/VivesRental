@@ -1,17 +1,64 @@
-﻿@model IList<VivesRental.Model.Product>
+﻿@model ArticleViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-
-<a class="btn btn-danger" asp-action="CreateProduct">New Product</a>
-
-
-@foreach (var product in Model)
-{
-    <div class="list-group">
-        <a asp-action="ProductDetails" asp-route-id="@product.Id" class="list-group-item list-group-item-action">@product.Name</a>
+<div class="container row p-0 m-0">
+    <div class="col-4">
+        <h2>Products</h2>
     </div>
+    <div class="col-5">
+        <form method="get" asp-controller="Article" asp-action="GetArticle">
+            <label asp-for="ArticleId">Scan:</label>
+            <input type="text" asp-for="ArticleId"/>
+            <button type="submit" class="btn btn-primary">Article info</button>
+        </form>
+    </div>
+    <div class="col-3">
+        <a class="btn btn-primary" asp-action="CreateProduct">New Product</a>
+    </div>
+    <div class="col-12 border p-3 mt-3 pre-scrollable" style="max-height: 75vh">
 
-}
+
+        <table class="table table-striped border">
+            <thead>
+            <tr class="table-secondary">
+                <th>
+                    Naam product
+                </th>
+                <th>
+                    Aantal articles
+                </th>
+                <th>
+                    Available articles
+                </th>
+                <th>
+
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>
+                        @product.NumberOfArticles
+                    </td>
+                    <td>
+                        @product.NumberOfAvailableArticles
+                    </td>
+                    <td>
+                        <form>
+                            <input type="hidden" asp-for="Product.Id" value="@product.Id"/>
+                            <button type="submit" class="btn btn-primary" asp-action="ProductDetails">Details</button>
+                        </form>
+                    </td>
+
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

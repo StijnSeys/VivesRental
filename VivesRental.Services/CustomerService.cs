@@ -30,10 +30,7 @@ namespace VivesRental.Services
 
         public Customer Create(Customer entity)
         {
-            if (!entity.IsValid())
-            {
-                return null;
-            }
+            if (!entity.IsValid()) return null;
 
             var customer = new Customer
             {
@@ -54,17 +51,11 @@ namespace VivesRental.Services
 
         public Customer Edit(Customer entity)
         {
-            if (!entity.IsValid())
-            {
-                return null;
-            }
+            if (!entity.IsValid()) return null;
 
             //Get Product from unitOfWork
             var customer = _unitOfWork.Customers.Get(entity.Id);
-            if (customer == null)
-            {
-                return null;
-            }
+            if (customer == null) return null;
 
             //Only update the properties we want to update
             customer.FirstName = entity.FirstName;
@@ -84,6 +75,9 @@ namespace VivesRental.Services
             if (customer == null)
                 return false;
 
+            //Remove the Customer from the Orders
+            _unitOfWork.Orders.ClearCustomer(id);
+            //Remove the Order
             _unitOfWork.Customers.Remove(id);
 
             var numberOfObjectsUpdated = _unitOfWork.Complete();

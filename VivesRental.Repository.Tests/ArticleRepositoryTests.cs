@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VivesRental.Repository.Core;
 using VivesRental.Tests.Data.Factories;
 
 namespace VivesRental.Repository.Tests
@@ -11,7 +9,6 @@ namespace VivesRental.Repository.Tests
     [TestClass]
     public class ArticleRepositoryTests
     {
-        
         [TestMethod]
         public void Add_Returns_1_When_Adding_Valid_Product()
         {
@@ -85,13 +82,14 @@ namespace VivesRental.Repository.Tests
                 //Arrange
                 var productRepository = new ProductRepository(context);
                 var articleRepository = new ArticleRepository(context);
-                for (int i = 0; i < 10; i++)
+                for (var i = 0; i < 10; i++)
                 {
                     var product = ProductFactory.CreateValidEntity();
                     productRepository.Add(product);
                     var articleToAdd = ArticleFactory.CreateValidEntity(product);
                     articleRepository.Add(articleToAdd);
                 }
+
                 context.SaveChanges();
 
                 //Act
@@ -117,7 +115,7 @@ namespace VivesRental.Repository.Tests
                 productRepository.Add(product);
                 var articleToAdd = ArticleFactory.CreateValidEntity(product);
                 articleRepository.Add(articleToAdd);
-                
+
                 context.SaveChanges();
 
                 //Act

@@ -1,39 +1,111 @@
-﻿@model VivesRental.Model.Product
+﻿@using VivesRental.Model
+@model ArticleViewModel
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="~/css/site.css"/>
+</head>
+<body>
+<h1 style="text-align: center">Product details</h1>
+
+<div class="row">
+
+    <div class="card-columns ">
+
+        <div class="card bg-info ">
+            <h5 class="card-title" style="text-align: center">@Model.Product.Name</h5>
+            <p class="card-text">
+                Discription: @Model.Product.Description
+            </p>
+            <p class="card-text">
+                Manufacturer: @Model.Product.Manufacturer
+            </p>
+            <p class="card-text">
+                Publisher: @Model.Product.Publisher
+            </p>
+
+            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Product.Id">Bewerken</a>
+
+        </div>
 
 
-<h1>Product details</h1>
+        <div class="flex-column">
+            <div class="card bg-info  float-right">
+                <form method="post">
 
-<p>Info of product @Model.Name</p>
+                    <label asp-for="Count">Add extra articles:</label>
+                    <input asp-for="Count" type="number" placeholder="Aantal?" class="form-control"/>
+                    <input type="hidden" asp-for="Product.Id" value="@Model.Product.Id"/>
 
-<partial name="ProductPartial" model="@Model" />
+                    <input type="submit" class="btn btn-primary" value="Create" asp-controller="Article" asp-action="CreateArticle"/>
 
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Modal Heading</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                Ben je zeker dat je dit product wilt verwijderen?
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <form method="post" asp-action="Delete" asp-controller="Product">
-                    <input type="hidden" id="ProductId" name="id" />
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">nee</button>
-                    <input type="submit" class="btn btn-light" value="ja" />
                 </form>
             </div>
-
         </div>
     </div>
 </div>
+
+<div class="col-12 border p-3 mt-3 ">
+    <div class=" pre-scrollable" style="max-height: 50vh">
+        <table class="table table-striped border table-sm ">
+            <thead>
+            <tr class="table-secondary">
+                <th>
+                    Article ID
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Change status
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            @foreach (var article in Model.Product.Articles)
+            {
+                <form method="post">
+                    <input type="hidden" asp-for="ArticleId" value="@article.Id"/>
+                    <input type="hidden" asp-for="Product.Id" value="@article.ProductId"/>
+                    <tr>
+                        <td>@article.Id</td>
+                        <td>@article.Status</td>
+                        <td>
+                            <div class="dropdown">
+
+                                <select asp-for="status">
+                                    @foreach (var status in Html.GetEnumSelectList<ArticleStatus>())
+                                    {
+                                        <option>@status.Text</option>
+                                    }
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="submit" class="btn btn-primary" asp-controller="Article" asp-action="ChangeStatus" value="Change">
+                        </td>
+                        <td>
+                            <input type="submit" class="btn btn-danger" asp-controller="Article" asp-action="Delete" value="Delete">
+                        </td>
+
+                    </tr>
+                </form>
+            }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+</body>
 
 @section Scripts
 {
@@ -50,6 +122,8 @@
                     //Stop de personId id in from
                     $("#ProductId").val(productId);
                 });
+
         });
+
     </script>
 }

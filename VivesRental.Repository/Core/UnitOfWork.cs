@@ -26,6 +26,7 @@ namespace VivesRental.Repository.Core
         public IOrderRepository Orders { get; }
         public IOrderLineRepository OrderLines { get; }
         public ICustomerRepository Customers { get; }
+
         public int Complete()
         {
             return _context.SaveChanges();
@@ -35,6 +36,5 @@ namespace VivesRental.Repository.Core
         {
             _context.Dispose();
         }
-
     }
 }

@@ -9,8 +9,6 @@ namespace VivesRental.Repository.Tests
     [TestClass]
     public class CustomerRepositoryTests
     {
-
-
         [TestMethod]
         public void Add_Returns_1_When_Adding_Valid_Customer()
         {
@@ -76,11 +74,12 @@ namespace VivesRental.Repository.Tests
             {
                 //Arrange
                 var customerRepository = new CustomerRepository(context);
-                for (int i = 0; i < 10; i++)
+                for (var i = 0; i < 10; i++)
                 {
                     var customer = CustomerFactory.CreateValidEntity();
                     customerRepository.Add(customer);
                 }
+
                 context.SaveChanges();
 
                 //Act

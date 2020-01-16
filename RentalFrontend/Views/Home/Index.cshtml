@@ -1,8 +1,84 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model CustomerOrderViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        /* Remove the navbar's default rounded borders and increase the bottom margin */
+        .navbar {
+            border-radius: 0;
+            margin-bottom: 50px;
+        }
+
+        /* Remove the jumbotron's default bottom margin */
+
+        .jumbotron { margin-bottom: 0; }
+
+        /* Add a gray background color and some padding to the footer */
+
+        footer {
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="jumbotron">
+    <div class="container text-center">
+        <h1>Vives Rental</h1>
+    </div>
 </div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <form method="get">
+                <div class="panel panel-heading">
+                    <div class="panel-heading">Customer Login</div>
+                    <div class="panel-body">
+                        <button type="submit" class="border-0" asp-controller="Customer" asp-action="CustomerDetails">
+                            <img src="login.png" class="img-responsive" style="width: 100%" alt="Image">
+                        </button>
+                    </div>
+                    <div class="panel-footer">
+                        <label asp-for="CustomerId">CustomerId</label>
+                        <input type="text" asp-for="CustomerId"/>
+                    </div>
+                    <span asp-validation-for="CustomerId" class="text-danger"></span>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-4">
+
+            <div class="panel panel-heading">
+                <div class="panel-heading">Customer Beheer</div>
+                <div class="panel-body">
+                    <a asp-controller="Customer" asp-action="CustomerList">
+                        <img src="Customers.png" class="img-responsive" style="width: 100%" alt="Image">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-heading">
+                <div class="panel-heading">Product Beheer</div>
+                <div class="panel-body">
+                    <a asp-controller="Product" asp-action="Index">
+                        <img src="inventory.png" class="img-responsive" style="width: 100%" alt="Image">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><br>
+
+</body>
+</html>

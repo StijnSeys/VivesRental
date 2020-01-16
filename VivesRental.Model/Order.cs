@@ -12,8 +12,9 @@ namespace VivesRental.Model
         {
             OrderLines = new List<OrderLine>();
         }
-        [Key]
-        public Guid Id { get; set; }
+
+        [Key] public Guid Id { get; set; }
+
         public Guid? CustomerId { get; set; }
         public Customer Customer { get; set; }
 

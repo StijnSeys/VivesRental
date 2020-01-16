@@ -1,34 +1,61 @@
-﻿@model VivesRental.Model.Customer
-
+﻿@model CustomerOrderViewModel
 
 <h1>Customer details</h1>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <div class="card" style="width: 36rem;">
+                <div class="card-header">
+                    <form>
+                        <input type="hidden" asp-for="Customer.Id" value="@Model.Customer.Id"/>
+                        <button type="submit" class="btn btn-primary" asp-controller="Order" asp-action="Index">Create new order</button>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Customer.FirstName @Model.Customer.LastName</h5>
+                    <p class="card-text">
+                        Email: @Model.Customer.Email
+                    </p>
+                    <p>
+                        Phone: @Model.Customer.PhoneNumber
+                    </p>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Customer.Id">Bewerken</a>
+                    <a class="btn btn-danger" data-toggle="modal" data-id="@Model.Customer.Id" data-target="#myModal">
+                        Remove
+                    </a>
 
-<p>Info of Customer @Model.FirstName   @Model.LastName</p>
+                </div>
+                <div class="card-footer">
+                    <div>
+                        <h5>Personal Orders: </h5>
+                    </div>
+                    <div class="list-group pre-scrollable">
 
-
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">@Model.FirstName  @Model.LastName</h5>
-        <p class="card-text">
-            @Model.Email
-
-        </p>
-        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Bewerken</a>
-        <a class="btn btn-danger deleteButton" data-toggle="modal"  data-id ="@Model.Id" data-target="#myModal">
-            Remove
-        </a>
-
-    </div>
-    <div class="card-footer">
-        @foreach (var order in @Model.Orders)
-        {
-            <div class="list-group">
-                @order.CreatedAt
+                        @foreach (var order in Model.Customer.Orders.OrderByDescending(order => order.CreatedAt))
+                        {
+                            <form>
+                                <label asp-for="Order.Id">ID:</label>
+                                <input type="text" readonly class="form-control-plaintext" asp-for="Order.Id" value="@order.Id"/>
+                                <label for="createTime">Created:</label>
+                                <input type="text" readonly class="form-control-plaintext" id="createTime" value="@order.CreatedAt"/>
+                                <button type="submit" asp-controller="Order" asp-action="GetOrder" class="btn btn-primary list-group-item ">Order Info</button>
+                            </form>
+                        }
+                    </div>
+                </div>
             </div>
-        }
+        </div>
+        <div class="col-md-auto">
+            <form method="post">
+                <h6>Return Article:</h6>
+                <label asp-for="Article.Id">Scan:</label>
+                <input type="hidden" asp-for="Customer.Id" value="@Model.Customer.Id"/>
+                <input type="text" asp-for="Article.Id"/>
+                <button type="submit" class="btn btn-primary" asp-controller="Order" asp-action="ReturnArticle">Return </button>
+            </form>
+        </div>
     </div>
 </div>
-
 <div class="modal fade" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -47,9 +74,9 @@
             <!-- Modal footer -->
             <div class="modal-footer">
                 <form method="post" asp-action="Delete" asp-controller="Customer">
-                    <input type="hidden" id="CustomerId" name="id" />
+                    <input type="hidden" id="CustomerId" name="id"/>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">nee</button>
-                    <input type="submit" class="btn btn-light" value="ja" />
+                    <input type="submit" class="btn btn-light" value="ja"/>
                 </form>
             </div>
 

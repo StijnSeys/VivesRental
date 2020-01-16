@@ -1,8 +1,13 @@
-﻿namespace VivesRental.Repository.Includes
+﻿using System;
+
+namespace VivesRental.Repository.Includes
 {
-	public class ProductIncludes
-	{
-		public bool Articles { get; set; }
-		public bool ArticleOrderLines { get; set; }
-	}
+    public class ProductIncludes
+    {
+        [Obsolete("Collection includes are not an efficient way to retrieve data. Will be removed in the near future.")]
+        public bool Articles { get; set; }
+
+        [Obsolete("Collection includes are not an efficient way to retrieve data. Will be removed in the near future.")]
+        public bool ArticleOrderLines { get; set; }
+    }
 }

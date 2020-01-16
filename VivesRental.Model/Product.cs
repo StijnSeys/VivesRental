@@ -13,10 +13,10 @@ namespace VivesRental.Model
             Articles = new List<Article>();
         }
 
-        [Key]
-        public Guid Id { get; set; }
-        [Required]
-        public string Name { get; set; }
+        [Key] public Guid Id { get; set; }
+
+        [Required] public string Name { get; set; }
+
         public string Description { get; set; }
         public string Manufacturer { get; set; }
         public string Publisher { get; set; }

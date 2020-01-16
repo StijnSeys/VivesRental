@@ -30,7 +30,7 @@ namespace VivesRental.Services
 
         public bool Rent(Guid orderId, Guid articleId)
         {
-            var article = _unitOfWork.Articles.Get(articleId, new ArticleIncludes{Product = true});
+            var article = _unitOfWork.Articles.Get(articleId, new ArticleIncludes {Product = true});
             var orderLine = article.CreateOrderLine(orderId);
 
             _unitOfWork.OrderLines.Add(orderLine);
@@ -40,7 +40,8 @@ namespace VivesRental.Services
 
         public bool Rent(Guid orderId, IList<Guid> articleIds)
         {
-            var articles = _unitOfWork.Articles.Find(a => articleIds.Contains(a.Id), new ArticleIncludes{Product = true});
+            var articles =
+                _unitOfWork.Articles.Find(a => articleIds.Contains(a.Id), new ArticleIncludes {Product = true});
 
             foreach (var article in articles)
             {
@@ -53,7 +54,7 @@ namespace VivesRental.Services
         }
 
         /// <summary>
-        /// Returns a rented article
+        ///     Returns a rented article
         /// </summary>
         /// <param name="orderLineId"></param>
         /// <param name="returnedAt"></param>
@@ -62,20 +63,11 @@ namespace VivesRental.Services
         {
             var orderLine = _unitOfWork.OrderLines.Get(orderLineId);
 
-            if (orderLine == null)
-            {
-                return false;
-            }
+            if (orderLine == null) return false;
 
-            if (returnedAt == DateTime.MinValue)
-            {
-                return false;
-            }
+            if (returnedAt == DateTime.MinValue) return false;
 
-            if (orderLine.ReturnedAt.HasValue)
-            {
-                return false;
-            }
+            if (orderLine.ReturnedAt.HasValue) return false;
 
             orderLine.ReturnedAt = returnedAt;
 

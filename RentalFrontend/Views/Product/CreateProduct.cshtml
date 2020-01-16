@@ -1,35 +1,13 @@
 ﻿@model VivesRental.Model.Product
-@{
-    ViewData["Title"] = "Product";
-}
+
+
+<h1>Create new product</h1>
 
 
 <form method="post">
-    <div class="form-group">
-        <label asp-for="Name">Naam</label>
-        <input asp-for="Name" type="text" class="form-control">
-        <span asp-validation-for="Name"  class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Description">Beschrijving</label>
-        <input asp-for="Description" type="text" class="form-control">
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Manufacturer">Manufacturer</label>
-        <input asp-for="Manufacturer" type="text" class="form-control">
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Publisher">Publisher</label>
-        <input asp-for="Publisher" type="text" class="form-control">
-        <span asp-validation-for="Publisher" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="RentalExpiresAfterDays">Expires after?</label>
-        <input asp-for="RentalExpiresAfterDays" type="number" class="form-group">
-        <span asp-validation-for="RentalExpiresAfterDays" class="text-danger"></span>
-    </div>
-    <input type="submit" class="btn btn-default" value="Add Product"/>
-</form>
 
+    <partial name="CreateProductPartial" model="Model"/>
+
+    <input type="submit" class="btn btn-primary" value="opslaan"/>
+
+</form>

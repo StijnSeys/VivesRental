@@ -1,14 +1,44 @@
 ﻿@model VivesRental.Model.Product
 
 
-
-<h1>edit</h1>
+<h1>edit product</h1>
 
 
 <form method="post">
-    
-    <partial name="CreateProduct" model="Model"/>
+
+    <partial name="CreateProductPartial" model="Model"/>
 
     <input type="submit" class="btn btn-primary" value="opslaan"/>
 
 </form>
+<a class="btn btn-danger deleteButton" data-toggle="modal" data-id="@Model.Id" data-target="#myModal">
+    Verwijderen
+</a>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Ben je zeker dat je dit product wilt verwijderen?
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <form method="post" asp-action="Delete" asp-controller="Product">
+                    <input type="hidden" asp-for="Id" name="id"/>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">nee</button>
+                    <input type="submit" class="btn btn-light" value="ja"/>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

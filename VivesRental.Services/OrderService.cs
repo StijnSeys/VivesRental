@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using VivesRental.Model;
 using VivesRental.Repository.Core;
+using VivesRental.Repository.Results;
 using VivesRental.Services.Contracts;
 
 namespace VivesRental.Services
 {
-
     public class OrderService : IOrderService
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -24,17 +24,23 @@ namespace VivesRental.Services
 
         public IList<Order> All()
         {
-            return _unitOfWork.Orders.GetAll().ToList();
+            return _unitOfWork.Orders
+                .GetAll()
+                .ToList();
+        }
+
+        public IList<OrderResult> AllResult()
+        {
+            return _unitOfWork.Orders
+                .GetAllResult()
+                .ToList();
         }
 
         public Order Create(Guid customerId)
         {
             var customer = _unitOfWork.Customers.Get(customerId);
 
-            if (customer == null)
-            {
-                return null;
-            }
+            if (customer == null) return null;
 
             var order = new Order
             {
@@ -48,20 +54,14 @@ namespace VivesRental.Services
 
             _unitOfWork.Orders.Add(order);
             var numberOfObjectsUpdated = _unitOfWork.Complete();
-            if (numberOfObjectsUpdated > 0)
-            {
-                return order;
-            }
+            if (numberOfObjectsUpdated > 0) return order;
             return null;
         }
 
         public bool Return(Guid orderId, DateTime returnedAt)
         {
             var orderLines = _unitOfWork.OrderLines.Find(rol => rol.OrderId == orderId);
-            foreach (var orderLine in orderLines)
-            {
-                orderLine.ReturnedAt = returnedAt;
-            }
+            foreach (var orderLine in orderLines) orderLine.ReturnedAt = returnedAt;
 
             var numberOfObjectsUpdated = _unitOfWork.Complete();
             return numberOfObjectsUpdated > 0;

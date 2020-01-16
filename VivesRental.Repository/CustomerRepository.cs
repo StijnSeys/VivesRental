@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using VivesRental.Model;
 using VivesRental.Repository.Contracts;
 using VivesRental.Repository.Core;
@@ -26,7 +25,7 @@ namespace VivesRental.Repository
         {
             var query = _context.Customers
                 .AsQueryable();
-            return query.SingleOrDefault(c => c.Id== id);
+            return query.SingleOrDefault(c => c.Id == id);
         }
 
         public IEnumerable<Customer> GetAll()
@@ -40,7 +39,7 @@ namespace VivesRental.Repository
             var localEntity = _context.Customers.Local.SingleOrDefault(e => e.Id == id);
             if (localEntity == null)
             {
-                var entity = new Customer { Id = id };
+                var entity = new Customer {Id = id};
                 _context.Customers.Attach(entity);
                 _context.Customers.Remove(entity);
             }

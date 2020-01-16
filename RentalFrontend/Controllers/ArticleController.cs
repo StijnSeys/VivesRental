@@ -1,74 +1,82 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RentalFrontend.Models;
 using VivesRental.Model;
+using VivesRental.Repository.Includes;
 using VivesRental.Services.Contracts;
 
 namespace RentalFrontend.Controllers
 {
     public class ArticleController : Controller
     {
-
         private readonly IArticleService _articleService;
+        private readonly IOrderService _orderService;
         private readonly IProductService _productService;
-        public ArticleController(IArticleService articleService, IProductService productService)
-        {
 
+        public ArticleController(IArticleService articleService, IProductService productService,
+            IOrderService orderService)
+        {
             _articleService = articleService;
             _productService = productService;
+            _orderService = orderService;
         }
 
-    
-
-        public IActionResult ArticleList(Guid id)
+        [HttpGet]
+        public IActionResult GetArticle(ArticleViewModel model)
         {
+            var includes = new ArticleIncludes
+            {
+                Product = true,
+                OrderLines = true
+            };
 
-            var product = _productService.Get(id);
+            var article = _articleService.Get(model.ArticleId, includes);
 
-            var articles = product.Articles;
+            foreach (var orderline in article.OrderLines)
+            {
+                var order = _orderService.Get(orderline.OrderId);
+                orderline.Order = order;
+            }
 
-            ArticleViewModel model = new ArticleViewModel();
-            model.Articles = articles;
-            model.ProductId = id;
-            
+            model.Article = article;
 
             return View(model);
         }
 
+
         [HttpPost]
         public IActionResult CreateArticle(ArticleViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                RedirectToPage("ArticleList");
-            }
+            if (!ModelState.IsValid) RedirectToPage("ArticleList");
 
-            Article article = new Article
+            var article = new Article
             {
-                ProductId = model.ProductId,
+                ProductId = model.Product.Id,
                 Status = 0
             };
 
-            for (int i = 0; i < model.Count; i++)
-            {
-                _articleService.Create(article);
-            }
-            
+            for (var i = 0; i < model.Count; i++) _articleService.Create(article);
 
-            return RedirectToAction("ArticleList", new{ id= model.ProductId});
 
+            return RedirectToAction("ProductDetails", "Product", new {ProductId = model.Product.Id});
         }
 
         [HttpPost]
-        public IActionResult Delete(Guid id)
+        public IActionResult ChangeStatus(ArticleViewModel model)
         {
+            _articleService.UpdateStatus(model.ArticleId, model.status);
 
-            _productService.Remove(id);
+            if (model.FromGetArticle) return RedirectToAction("GetArticle", model);
 
-            return RedirectToAction("ArticleList");
+            return RedirectToAction("ProductDetails", "Product", new {ProductId = model.Product.Id});
+        }
+
+
+        [HttpPost]
+        public IActionResult Delete(ArticleViewModel model)
+        {
+            _articleService.Remove(model.ArticleId);
+
+            return RedirectToAction("ProductDetails", "Product", new {ProductId = model.Product.Id});
         }
     }
 }

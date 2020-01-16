@@ -1,0 +1,20 @@
+﻿@model CustomerOrderViewModel
+
+<h4>ID: @Model.Order.Id </h4>
+
+<div class="list-group">
+    @foreach (var orderLine in Model.OrderLines)
+    {
+        <p>Product: @orderLine.ProductName</p>
+
+        @if (orderLine.ReturnedAt.HasValue)
+        {
+            <p style="color: green"> Returned: @orderLine.ReturnedAt</p>
+        }
+        else
+        {
+            <p style="color: red"> Expires: @orderLine.ExpiresAt</p>
+        }
+    }
+
+</div>

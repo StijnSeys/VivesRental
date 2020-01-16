@@ -1,37 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RentalFrontend.Models;
 using VivesRental.Model;
+using VivesRental.Repository.Includes;
 using VivesRental.Services.Contracts;
 
 namespace RentalFrontend.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductService _productService;
         private readonly IArticleService _articleService;
+        private readonly IProductService _productService;
 
-        public ProductController(IProductService productService , IArticleService articleService)
+        public ProductController(IProductService productService, IArticleService articleService)
         {
             _productService = productService;
             _articleService = articleService;
         }
+
         public IActionResult Index()
         {
-            var products = _productService.All();
-            return View(products);
+            var model = new ArticleViewModel();
 
+            var includes = new ProductIncludes
+            {
+                Articles = true
+            };
+
+            var products = _productService.AllResult(includes);
+
+            model.Products = products;
+            return View(model);
         }
 
         [HttpGet]
-        public IActionResult ProductDetails(Guid id)
+        public IActionResult ProductDetails(ArticleViewModel model)
         {
-            var product = _productService.Get(id);
+            var product = new Product();
+            var includes = new ProductIncludes
+            {
+                Articles = true
+            };
+            if (model.ProductId == Guid.Empty)
+                product = _productService.Get(model.Product.Id, includes);
+            else
+                product = _productService.Get(model.ProductId, includes);
 
-            return View(product);
+            model.Product = product;
 
+            return View(model);
         }
 
 
@@ -44,15 +61,11 @@ namespace RentalFrontend.Controllers
         [HttpPost]
         public IActionResult CreateProduct(Product product)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(product);
-            }
+            if (!ModelState.IsValid) return View(product);
 
             _productService.Create(product);
 
-            return RedirectToAction("CreateProduct");
-
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -60,10 +73,7 @@ namespace RentalFrontend.Controllers
         {
             var product = _productService.Get(id);
 
-            if (product == null)
-            {
-                return RedirectToAction("Index");
-            }
+            if (product == null) return RedirectToAction("Index");
 
             return View(product);
         }
@@ -71,10 +81,7 @@ namespace RentalFrontend.Controllers
         [HttpPost]
         public IActionResult Edit(Product product)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(product);
-            }
+            if (!ModelState.IsValid) return View(product);
 
             _productService.Edit(product);
 
@@ -84,11 +91,9 @@ namespace RentalFrontend.Controllers
         [HttpPost]
         public IActionResult Delete(Guid id)
         {
-
             _productService.Remove(id);
 
             return RedirectToAction("Index");
         }
-        
     }
 }

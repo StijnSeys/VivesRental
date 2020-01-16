@@ -1,0 +1,75 @@
+﻿@using VivesRental.Model
+@model ArticleViewModel
+
+<h3 style="text-align: center">@Model.Article.Product.Name</h3>
+
+
+<div class="col-12 border p-3 mt-3 ">
+
+    <table class="table table-striped border table-sm ">
+        <thead>
+        <tr class="table-secondary">
+            <th>
+                Article ID
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Change status
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <form method="post">
+            <input type="hidden" asp-for="ArticleId" value="@Model.Article.Id"/>
+            <input type="hidden" asp-for="Product.Id" value="@Model.ProductId"/>
+            <input type="hidden" asp-for="FromGetArticle" value="true"/>
+            <tr>
+                <td>@Model.Article.Id</td>
+                <td>@Model.Article.Status</td>
+                <td>
+                    <div class="dropdown">
+
+                        <select asp-for="status">
+                            @foreach (var status in Html.GetEnumSelectList<ArticleStatus>())
+                            {
+                                <option>@status.Text</option>
+                            }
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <input type="submit" class="btn btn-primary" asp-controller="Article" asp-action="ChangeStatus" value="Change">
+                </td>
+                <td>
+                    <input type="submit" class="btn btn-danger" asp-controller="Article" asp-action="Delete" value="Delete">
+                </td>
+
+            </tr>
+        </form>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<h6>Rent History:</h6>
+<div class="pre-scrollable">
+
+    @foreach (var orderLine in Model.Article.OrderLines)
+    {
+        <p>@orderLine.Order.CustomerFirstName @orderLine.Order.CustomerLastName</p>
+        <p>@orderLine.RentedAt</p>
+    }
+</div>

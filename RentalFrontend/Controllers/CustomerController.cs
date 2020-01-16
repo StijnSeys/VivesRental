@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RentalFrontend.Models;
 using VivesRental.Model;
 using VivesRental.Services.Contracts;
 
@@ -11,29 +10,46 @@ namespace RentalFrontend.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerService _customerService;
+        private readonly IOrderLineService _orderLineService;
+        private readonly IOrderService _orderService;
 
-        public CustomerController(ICustomerService customerService)
+
+        public CustomerController(ICustomerService customerService, IOrderService orderService,
+            IOrderLineService orderLineService)
         {
-
+            _orderLineService = orderLineService;
             _customerService = customerService;
+            _orderService = orderService;
         }
 
 
         public IActionResult CustomerList()
         {
-
             var customers = _customerService.All();
-
-            return View(customers);
+            var model = new CustomerOrderViewModel
+            {
+                AllCustomers = customers
+            };
+            return View(model);
         }
 
-        [HttpGet]
-        public IActionResult CustomerDetails(Guid id)
+
+        public IActionResult CustomerDetails(CustomerOrderViewModel model)
         {
-            var customer = _customerService.Get(id);
+            var customer = _customerService.Get(model.CustomerId);
+            var orders = _orderService.All();
 
-            return View(customer);
+            IList<Order> customerOrders = new List<Order>();
+            if (customer.Orders.Count > 0)
+                foreach (var order in orders)
+                {
+                    order.OrderLines = _orderLineService.FindByOrderId(order.Id);
+                    if (order.CustomerId == model.CustomerId && order.OrderLines.Count > 0) customerOrders.Add(order);
+                }
 
+            model.Customer = customer;
+            model.Customer.Orders = customerOrders;
+            return View(model);
         }
 
 
@@ -46,15 +62,11 @@ namespace RentalFrontend.Controllers
         [HttpPost]
         public IActionResult Create(Customer customer)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(customer);
-            }
+            if (!ModelState.IsValid) return View(customer);
 
             _customerService.Create(customer);
 
             return RedirectToAction("CustomerList");
-
         }
 
         [HttpGet]
@@ -62,10 +74,7 @@ namespace RentalFrontend.Controllers
         {
             var product = _customerService.Get(id);
 
-            if (product == null)
-            {
-                return RedirectToAction("CustomerList");
-            }
+            if (product == null) return RedirectToAction("CustomerList");
 
             return View(product);
         }
@@ -73,10 +82,7 @@ namespace RentalFrontend.Controllers
         [HttpPost]
         public IActionResult Edit(Customer customer)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(customer);
-            }
+            if (!ModelState.IsValid) return View(customer);
 
             _customerService.Edit(customer);
 
@@ -86,7 +92,6 @@ namespace RentalFrontend.Controllers
         [HttpPost]
         public IActionResult Delete(Guid id)
         {
-
             _customerService.Remove(id);
 
             return RedirectToAction("CustomerList");
