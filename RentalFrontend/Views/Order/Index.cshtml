@@ -3,28 +3,33 @@
 <h3>Order: @Model.Customer.FirstName @Model.Customer.LastName</h3>
 
 <div class="container">
-    <div>
-        <form asp-controller="Order" asp-action="AddOrderLine">
-            <input type="hidden" asp-for="@Model.Customer.Id" value="@Model.Customer.Id"/>
+    <div class="row">
+        <div class="col-6">
+            <form asp-controller="Order" asp-action="AddOrderLine">
+                <input type="hidden" asp-for="@Model.Customer.Id" value="@Model.Customer.Id" />
 
-            <label asp-for="Article.Id">Scan:</label>
-            <input type="text" asp-for="Article.Id"/>
-            <button type="submit" class="btn btn-primary">Add Article</button>
-        </form>
-    </div>
-    <div>
-        <p>Test ID's:</p>
-        <div class="pre-scrollable small" style="max-height: 5vh">
+                <label asp-for="Article.Id">Scan:</label>
+                <input type="text" asp-for="Article.Id" value="" />
+                <button type="submit" class="btn btn-primary">Add Article</button>
+            </form>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-4">
+            <p>Test ID's (available articles)</p>
+            <div class="pre-scrollable small" style="max-height: 5vh">
 
-            @foreach (var article in Model.AvailableArticles)
-            {
-                <p>@article.Id</p>
-            }
+                @foreach (var article in Model.AvailableArticles)
+                {
+                    <p>@article.Id</p>
+                }
+            </div>
         </div>
     </div>
 </div>
 <div>
-    <h4>Beschikbare Producten:</h4>
+    <div class="m-5">
+        <h4>Beschikbare Producten:</h4>
+    </div>
     <div class=" pre-scrollable">
         <div class="container">
             <div class="row " style="padding-bottom: 20px">
@@ -47,30 +52,41 @@
 
     </div>
 </div>
-
-<h4>Bestelling voor: @Model.Customer.FirstName @Model.Customer.LastName</h4>
-<div class="list-group">
+<div class="mt-5">
+    <h4>Bestelling voor: @Model.Customer.FirstName @Model.Customer.LastName</h4>
+</div>
+<div class="list-group ">
     @if (Model.OrderArticles == null)
     {
-        <p class="list-group-item">Nog geen producten</p>
+    <p class="list-group-item">Geen Articles</p>
+    }
+    else if (Model.OrderArticles.Count == 0)
+    {
+    <p class="list-group-item">Geen Articles</p>
     }
     else
     {
-        @foreach (var article in Model.OrderArticles)
-        {
-            <form>
-                <input type="hidden" asp-for="@Model.Customer.Id" value="@Model.Customer.Id"/>
-                <input type="hidden" asp-for="@Model.Article.Id" value="@article.Id"/>
-                <input type="submit" asp-action="DeleteOrderLine" class="list-group-item list-group-item-action" value="@article.Product.Name">
-            </form>
-        }
         <div>
             <form method="post">
                 <input type="hidden" asp-for="@Model.Customer.Id" value="@Model.Customer.Id"/>
                 <span class="float-right">
-                    <button type="submit" asp-action="CreateOrder" class="btn btn-primary btn-lg"> Confirm order</button>
+                    <button type="submit" asp-action="CreateOrder" class="btn btn-success btn-lg"> Confirm order</button>
                 </span>
             </form>
+        </div>
+        <div class="container " >
+            <div class="row">
+                @foreach (var article in Model.OrderArticles)
+                {
+                    <div class="col-3">
+                        <form>
+                            <input type="hidden" asp-for="@Model.Customer.Id" value="@Model.Customer.Id" />
+                            <input type="hidden" asp-for="@Model.Article.Id" value="@article.Id" />
+                            <button type="submit" asp-action="DeleteOrderLine" class=" btn-lg btn-outline-dark btn-group-vertical mb-3 ">@article.Product.Name</button>
+                        </form>
+                    </div>
+                }
+            </div>
         </div>
     }
 </div>

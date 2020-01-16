@@ -99,9 +99,9 @@ namespace RentalFrontend.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(Guid id)
+        public IActionResult Delete(Customer customer)
         {
-            _customerService.Remove(id);
+            _customerService.Remove(customer.Id);
 
             return RedirectToAction("CustomerList");
         }

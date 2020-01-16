@@ -1,133 +1,86 @@
 ﻿@model CustomerOrderViewModel
+    <div class="mb-4">
+        <h3 style="text-align: center">Customer page</h3>
+    </div>
+<div class="container-fluid">
+<div class="row justify-content-md-center">
 
-<h1 style="text-align: center">Customer page</h1>
-<div class="container">
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            <div class="card border-0 p-3 mt-3" style="width: 36rem;">
-                <div class="card-header">
-                    <form>
-                        <input type="hidden" asp-for="Customer.Id" value="@Model.Customer.Id"/>
-                        <button type="submit" class="btn btn-primary" asp-controller="Order" asp-action="Index">Create new order</button>
-                    </form>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">@Model.Customer.FirstName @Model.Customer.LastName</h5>
-                    <p class="card-text">
-                        Email: @Model.Customer.Email
-                    </p>
-                    <p>
-                        Phone: @Model.Customer.PhoneNumber
-                    </p>
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Customer.Id">Bewerken</a>
-                    <a class="btn btn-danger" data-toggle="modal" data-id="@Model.Customer.Id" data-target="#myModal">
-                        Remove
-                    </a>
-
-                </div>
-                <div class="card-footer">
-                    <div>
-                        <h5>Personal Orders: </h5>
-                    </div>
-                    <div class="list-group pre-scrollable">
-
-                        @foreach (var order in Model.Customer.Orders.OrderByDescending(order => order.CreatedAt))
-                        {
-                           var notDone = new bool();
-                            @foreach (var orderline in order.OrderLines)
-                            {
-                                if (orderline.ReturnedAt == null)
-                                {
-                                    notDone = true;
-                                }
-                            }
-                            if (notDone)
-                                {
-                                    <div class="rounded border p-3 mt-3" style="background-color: lightcoral">
-                                        <form>
-                                            <p style="text-align: center">Not fully returned</p>
-                                            <label asp-for="Order.Id">Order Id:</label>
-                                            <input type="text" readonly class="form-control-plaintext" asp-for="Order.Id" value="@order.Id"/>
-                                            <label for="createTime">Created:</label>
-                                            <input type="text" readonly class="form-control-plaintext" id="createTime" value="@order.CreatedAt"/>
-                                            <button type="submit" asp-controller="Order" asp-action="GetOrder" class="btn btn-primary list-group-item ">Extra Info</button>
-                                        </form>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class=" rounded border p-3 mt-3" style="background-color: lightgreen">
-                                        <form>
-                                            <p style="text-align: center">Returned</p>
-                                            <label asp-for="Order.Id">ID:</label>
-                                            <input type="text" readonly class="form-control-plaintext" asp-for="Order.Id" value="@order.Id" />
-                                            <label for="createTime">Created:</label>
-                                            <input type="text" readonly class="form-control-plaintext" id="createTime" value="@order.CreatedAt" />
-                                            <button type="submit" asp-controller="Order" asp-action="GetOrder" class="btn btn-primary list-group-item ">Extra Info</button>
-                                        </form>
-                                    </div>
-                                }
-                            
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-auto">
-            <form method="post">
-                <h6>Return Article:</h6>
-                <label asp-for="Article.Id">Scan:</label>
+    <div class="col-3">
+        <form method="post">
+            <h6>Return Article:</h6>
+            <label asp-for="Article.Id">Scan:</label>
+            <input type="hidden" asp-for="Customer.Id" value="@Model.Customer.Id"/>
+            <input type="text" asp-for="Article.Id"/>
+            <button type="submit" class="btn btn-primary" asp-controller="Order" asp-action="ReturnArticle">Return </button>
+        </form>
+    </div>
+    <div class="col-6" style="text-align: center">
+            <h5 class="card-title">@Model.Customer.FirstName @Model.Customer.LastName</h5>
+            <p class="card-text">
+                Email: @Model.Customer.Email
+            </p>
+            <p>
+                Phone: @Model.Customer.PhoneNumber
+            </p>
+            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Customer.Id">Bewerken</a>
+           
+    </div>
+       
+        <div class="col-3">
+            <form>
                 <input type="hidden" asp-for="Customer.Id" value="@Model.Customer.Id"/>
-                <input type="text" asp-for="Article.Id"/>
-                <button type="submit" class="btn btn-primary" asp-controller="Order" asp-action="ReturnArticle">Return </button>
+                <button type="submit" class="btn-lg btn-success  " asp-controller="Order" asp-action="Index">Create new order</button>
             </form>
         </div>
     </div>
 </div>
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<div class="mt-4">
+    <h5 style="text-align: center">Personal Orders: </h5>
+</div>
+<div class="pre-scrollable">
+    <div class="container">
+       
+        <div class="row p-5 " >
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Modal Heading</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                Ben je zeker dat je deze klant wilt verwijderen?
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <form method="post" asp-action="Delete" asp-controller="Customer">
-                    <input type="hidden" id="CustomerId" name="id"/>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">nee</button>
-                    <input type="submit" class="btn btn-light" value="ja"/>
-                </form>
-            </div>
-
+            @foreach (var order in Model.Customer.Orders.OrderByDescending(order => order.CreatedAt))
+            {
+                var notDone = new bool();
+                @foreach (var orderLine in order.OrderLines)
+                {
+                    if (orderLine.ReturnedAt == null)
+                    {
+                        notDone = true;
+                    }
+                }
+                if (notDone)
+                {
+                    <div class="col-5 rounded border p-3 mt-3" style="background-color: lightcoral">
+                        <form>
+                            <p style="text-align: center">Not fully returned</p>
+                            <label asp-for="Order.Id">Order Id:</label>
+                            <input type="text" readonly class="form-control-plaintext" asp-for="Order.Id" value="@order.Id" />
+                            <label for="createTime">Created:</label>
+                            <input type="text" readonly class="form-control-plaintext" id="createTime" value="@order.CreatedAt" />
+                            <button type="submit" asp-controller="Order" asp-action="GetOrder" class="btn btn-primary list-group-item ">Extra Info</button>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <div class= "col-5 rounded border p-3 mt-3" style="background-color: lightgreen">
+                        <form>
+                            <p style="text-align: center">Returned</p>
+                            <label asp-for="Order.Id">ID:</label>
+                            <input type="text" readonly class="form-control-plaintext" asp-for="Order.Id" value="@order.Id" />
+                            <label for="createTime">Created:</label>
+                            <input type="text" readonly class="form-control-plaintext" id="createTime" value="@order.CreatedAt" />
+                            <button type="submit" asp-controller="Order" asp-action="GetOrder" class="btn btn-primary list-group-item ">Extra Info</button>
+                        </form>
+                    </div>
+                }
+         
+               <div class="col-1"></div>
+            }
         </div>
     </div>
 </div>
-
-
-@section Scripts
-{
-
-    <script>
-        //JQUERRY
-        // als mijn pagina geladen is
-        $(function() {
-            //Rigistreer de click events op de delete button
-            $(".deleteButton").on("click",
-                function() {
-                    //wanneer er op de knop delete is geklikt doe....
-                    var customerId = $(this).data("id");
-                    //Stop de personId id in from
-                    $("#CustomerId").val(customerId);
-                });
-        });
-    </script>
-}

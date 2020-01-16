@@ -30,7 +30,7 @@
 </head>
 <body>
 
-<div class="jumbotron">
+<div class="jumbotron container">
     <div class="container text-center">
         <h1>Vives Rental</h1>
     </div>
@@ -43,7 +43,7 @@
             <form method="get">
                 <div class="panel panel-heading">
 
-                    <div class="panel-heading">Customer Login</div>
+                    <div class="panel-heading" style="text-align: center">Customer Login</div>
                     <div class="panel-body">
                         <button type="submit" class="border-0  bg-white" asp-controller="Customer" asp-action="CustomerDetails">
                             <img src="login.png" class="img-responsive" style="width: 100%" alt="Image">
@@ -68,7 +68,7 @@
         <div class="col-sm-4">
             <form method="get">
                 <div class="panel panel-heading">
-                    <div class="panel-heading">Order Beheer</div>
+                    <div class="panel-heading" style="text-align: center">Order Beheer</div>
                     <div class="panel-body">
                         <button type="submit" class="border-0 bg-white" asp-controller="Order" asp-action="">
                             <img src="order.png" class="img-responsive" style="width: 100%" alt="Image">
@@ -80,7 +80,7 @@
         <div class="col-sm-4">
 
             <div class="panel panel-heading">
-                <div class="panel-heading">Customer Beheer</div>
+                <div class="panel-heading" style="text-align: center">Customer Beheer</div>
                 <div class="panel-body">
                     <a asp-controller="Customer" asp-action="CustomerList">
                         <img src="Customers.png" class="img-responsive" style="width: 100%" alt="Image">
@@ -90,7 +90,7 @@
         </div>
         <div class="col-sm-4">
             <div class="panel panel-heading">
-                <div class="panel-heading">Stock Beheer</div>
+                <div class="panel-heading" style="text-align: center">Stock Beheer</div>
                 <div class="panel-body">
                     <a asp-controller="Product" asp-action="Index">
                         <img src="inventory.png" class="img-responsive" style="width: 100%" alt="Image">
