@@ -18,7 +18,7 @@ namespace RentalFrontend.Controllers
         {
             if (customerFound == 1)
             {
-                CustomerOrderViewModel vm = new CustomerOrderViewModel()
+                var vm = new CustomerOrderViewModel()
                 {
                     Message = "Customer not found!",
                     Error = customerFound
@@ -29,7 +29,7 @@ namespace RentalFrontend.Controllers
 
             else
             {
-                CustomerOrderViewModel vm = new CustomerOrderViewModel()
+                var vm = new CustomerOrderViewModel()
                 {
                     Message = "",
                     Error = 2

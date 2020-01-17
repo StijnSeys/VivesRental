@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using RentalFrontend.Models;
 using VivesRental.Model;
-using VivesRental.Repository.Includes;
-using VivesRental.Repository.Results;
 using VivesRental.Services.Contracts;
 
 namespace RentalFrontend.Controllers
@@ -100,8 +98,10 @@ namespace RentalFrontend.Controllers
 
             _customerService.Edit(customer);
 
-            var model = new CustomerOrderViewModel();
-            model.CustomerId = customer.Id;
+            var model = new CustomerOrderViewModel
+            {
+                CustomerId = customer.Id
+            };
             var message = "Customer edited";
             TempData["FeedbackMessage"] = message;
             return RedirectToAction("CustomerDetails", model);

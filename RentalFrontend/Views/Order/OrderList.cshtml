@@ -41,7 +41,7 @@
             <td class=" text-center" >
                 NO
             </td>
-            <input type="hidden" asp-for="extraInfo" value="true"/>
+            <input type="hidden" asp-for="ExtraInfo" value="true"/>
             <input type="hidden" asp-for="Customer.Id" value="@orderList.CustomerId" />
             <input type="hidden" asp-for="Order.Id" value="@orderList.Id" />
                 <td class="text-right">
@@ -60,7 +60,7 @@
 
                     <td>  @orderList.NumberOfOrderLines</td>
                     <td class="text-success text-center"> YES </td>
-                    <input type="hidden" asp-for="extraInfo" value="true" />
+                    <input type="hidden" asp-for="ExtraInfo" value="true" />
                     <input type="hidden" asp-for="@Model.Customer.Id" value="@orderList.CustomerId" />
                     <input type="hidden" asp-for="@Model.Order.Id" value="@orderList.Id" />
                     <td class="text-right">

@@ -36,7 +36,7 @@ namespace RentalFrontend.Controllers
         [HttpGet]
         public IActionResult ProductDetails(ArticleViewModel model)
         {
-            var product = new Product();
+            Product product;
             var includes = new ProductIncludes
             {
                 Articles = true
@@ -88,8 +88,10 @@ namespace RentalFrontend.Controllers
 
             _productService.Edit(product);
 
-            var model = new ArticleViewModel();
-            model.ProductId = product.Id;
+            var model = new ArticleViewModel
+            {
+                ProductId = product.Id
+            };
 
             var message = "Product edited";
             TempData["FeedbackMessage"] = message;

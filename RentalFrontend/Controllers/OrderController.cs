@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using RentalFrontend.Models;
 using RentalFrontend.TempData;
 using VivesRental.Model;
@@ -71,13 +70,14 @@ namespace RentalFrontend.Controllers
                 Product = true
             };
 
-            //for scan articleId
+            //for scanned articleId
             if (model.Article!= null)
             {
                 var article = _articleService.Get(model.Article.Id, includes);
                 articleList.Add(article);
                 model.Article = article;
             }
+            // when clicked on order article button
             else
             {
                 var availableArticle = _articleService.GetAvailableArticles(includes);
@@ -110,9 +110,8 @@ namespace RentalFrontend.Controllers
         public IActionResult DeleteOrderLine(CustomerOrderViewModel model)
         {
             var orderArticles = _databaseContext.Articles;
-            foreach (var article in orderArticles.ToList())
-                if (article.Id == model.Article.Id)
-                    orderArticles.Remove(article);
+            foreach (var article in orderArticles.ToList().Where(article => article.Id == model.Article.Id))
+                orderArticles.Remove(article);
             model.OrderArticles = orderArticles;
 
             return Index(model);
@@ -142,10 +141,9 @@ namespace RentalFrontend.Controllers
         {
             var order = _orderService.Get(model.Order.Id);
             var orderLines = _orderLineService.FindByOrderId(model.Order.Id);
+
             model.Order = order;
             model.OrderLines = orderLines;
-
-     
 
             return View(model);
         }
@@ -202,7 +200,7 @@ namespace RentalFrontend.Controllers
 
             var message = "Order returned";
             TempData["FeedbackMessage"] = message;
-            if (model.extraInfo)
+            if (model.ExtraInfo)
             {
               return  RedirectToAction("OrderList");
             }

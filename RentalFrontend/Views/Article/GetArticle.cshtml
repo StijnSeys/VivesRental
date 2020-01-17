@@ -39,7 +39,7 @@
                 <td>
                     <div class="dropdown">
 
-                        <select asp-for="status">
+                        <select asp-for="Status">
                             @foreach (var status in Html.GetEnumSelectList<ArticleStatus>())
                             {
                                 <option>@status.Text</option>

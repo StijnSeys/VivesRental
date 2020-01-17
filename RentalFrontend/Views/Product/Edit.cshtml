@@ -35,15 +35,15 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                Ben je zeker dat je dit product wilt verwijderen?
+                Ar you sure you want to remove this product?
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
                 <form method="post" asp-action="Delete" asp-controller="Product">
                     <input type="hidden" asp-for="Id" name="id" />
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">nee</button>
-                    <input type="submit" class="btn btn-light" value="ja" />
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                    <input type="submit" class="btn btn-light" value="Yes" />
                 </form>
             </div>
 

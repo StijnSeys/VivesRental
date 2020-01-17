@@ -83,7 +83,7 @@
                         <td>
                             <div class="dropdown">
 
-                                <select asp-for="status">
+                                <select asp-for="Status">
                                     @foreach (var status in Html.GetEnumSelectList<ArticleStatus>())
                                     {
                                         <option>@status.Text</option>
@@ -115,14 +115,14 @@
 
     <script>
         //JQUERRY
-        // als mijn pagina geladen is
+       
         $(function() {
-            //Rigistreer de click events op de delete button
+            
             $(".deleteButton").on("click",
                 function() {
-                    //wanneer er op de knop delete is geklikt doe....
+                    
                     var productId = $(this).data("id");
-                    //Stop de personId id in from
+                    
                     $("#ProductId").val(productId);
                 });
 

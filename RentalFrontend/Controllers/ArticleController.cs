@@ -31,11 +31,11 @@ namespace RentalFrontend.Controllers
 
             var article = _articleService.Get(model.ArticleId, includes);
 
-            foreach (var orderline in article.OrderLines)
+            foreach (var orderLine in article.OrderLines)
             {
-                var order = _orderService.Get(orderline.OrderId);
+                var order = _orderService.Get(orderLine.OrderId);
                 
-                orderline.Order = order;
+                orderLine.Order = order;
             }
             
             model.Article = article;
@@ -66,7 +66,7 @@ namespace RentalFrontend.Controllers
         [HttpPost]
         public IActionResult ChangeStatus(ArticleViewModel model)
         {
-            _articleService.UpdateStatus(model.ArticleId, model.status);
+            _articleService.UpdateStatus(model.ArticleId, model.Status);
 
             if (model.FromGetArticle) return RedirectToAction("GetArticle", model);
 

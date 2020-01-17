@@ -1,16 +1,5 @@
 ﻿@model ArticleViewModel
 
-<div class="container  mb-3 text-center">
-    @if (TempData["FeedBackMessage"] != null && !string.IsNullOrWhiteSpace(TempData["FeedBackMessage"].ToString()))
-    {
-        <div class="text-success col-12 ">
-            <h6>
-                @TempData["FeedbackMessage"]
-            </h6>
-        </div>
-    }
-</div>
-
 <div class="container row p-0 m-0">
     <div class="col-4">
         <h2>Products</h2>
@@ -32,10 +21,10 @@
             <thead>
             <tr class="table-secondary">
                 <th>
-                    Naam product
+                    Name product
                 </th>
                 <th>
-                    Aantal articles
+                     Articles
                 </th>
                 <th>
                     Available articles

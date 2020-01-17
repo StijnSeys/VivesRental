@@ -15,18 +15,18 @@
 
 <div class="container mb-5 mb-5">
     <div class="row ">
-        <div class="col-sm-4"><div class="text-info">* Scan text fields should not be editable in project</div></div>
+        <div class="col-sm-4"><div class="text-info">* Scan text fields should not be editable </div></div>
         <div class="col-sm-4">
             <form method="get">
-                <div class="panel panel-heading">
+                <div>
 
-                    <div class="panel-heading font-weight-bold" style=" text-align: center  "> Customer Login</div>
-                    <div class="panel-body">
+                    <div class=" font-weight-bold" style=" text-align: center  "> Customer Login</div>
+                    <div >
                         <button type="submit" class="border-0  bg-white" asp-controller="Customer" asp-action="CustomerDetails">
-                            <img src="login.png" class="img-responsive" style="width: 100%" alt="Image">
+                            <img src="login.png"  style="width: 100%" alt="Image">
                         </button>
                     </div>
-                    <div class="panel-footer text-center bg-white ">
+                    <div class=" text-center bg-white ">
                         <label asp-for="CustomerId">Scan CustomerId:</label>
                         <input type="text" asp-for="CustomerId" value="" />
                         @if (@Model.Error == 1)
@@ -46,11 +46,11 @@
     <div class="row">
         <div class="col-sm-4">
             <form method="get">
-                <div class="panel panel-heading">
-                    <div class="panel-heading font-weight-bold" style="text-align: center">Order management </div>
-                    <div class="panel-body">
+                <div >
+                    <div class=" font-weight-bold" style="text-align: center">Order management </div>
+                    <div >
                         <button type="submit" class="border-0 bg-white" asp-controller="Order" asp-action="OrderList">
-                            <img src="order.png" class="img-responsive" style="width: 100%" alt="Image">
+                            <img src="order.png" style="width: 100%" alt="Image">
                         </button>
                     </div>
                 </div>
@@ -58,21 +58,21 @@
         </div>
         <div class="col-sm-4">
 
-            <div class="panel panel-heading">
-                <div class="panel-heading font-weight-bold mb-5" style="text-align: center">Customer  management</div>
-                <div class="panel-body">
+            <div >
+                <div class=" font-weight-bold mb-5" style="text-align: center">Customer  management</div>
+                <div >
                     <a asp-controller="Customer" asp-action="CustomerList">
-                        <img src="Customers.png" class="img-responsive" style="width: 100%" alt="Image">
+                        <img src="Customers.png" style="width: 100%" alt="Image">
                     </a>
                 </div>
             </div>
         </div>
         <div class="col-sm-4">
-            <div class="panel panel-heading">
-                <div class="panel-heading font-weight-bold" style="text-align: center">Stock  management</div>
-                <div class="panel-body">
+            <div >
+                <div class=" font-weight-bold" style="text-align: center">Stock  management</div>
+                <div>
                     <a asp-controller="Product" asp-action="Index">
-                        <img src="inventory.png" class="img-responsive" style="width: 100%" alt="Image">
+                        <img src="inventory.png"  style="width: 100%" alt="Image">
                     </a>
                 </div>
             </div>
