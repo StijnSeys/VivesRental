@@ -1,0 +1,78 @@
+﻿@model CustomerOrderViewModel
+
+
+<div>
+    <h3 style="text-align: center">Order list</h3>
+</div>
+
+<div class="list-group pre-scrollable"  style="max-height: 75vh">
+    
+<div class="col-12 border p-3 mt-3">
+
+    <table class="table table-striped border">
+    <tr class="table-secondary">
+        <th>
+            Name
+        </th>
+        <th>
+            Created
+        </th>
+        <th>
+            Articles
+        </th>
+        <th>
+            Articles returned
+        </th>
+        <th>
+
+        </th>
+    </tr>
+    @foreach (var orderList in @Model.OrderResults.OrderByDescending(orderList => orderList.CreatedAt))
+
+    {
+        if (orderList.ReturnedAt == null)
+        {
+            <form method="get"> 
+        <tr class="table-danger" >
+            <td> @orderList.CustomerFirstName  @orderList.CustomerLastName </td>
+            <td>@orderList.CreatedAt</td>
+
+            <td>  @orderList.NumberOfOrderLines</td>
+            <td >
+                NO
+            </td>
+            <input type="hidden" asp-for="extraInfo" value="true"/>
+            <input type="hidden" asp-for="Customer.Id" value="@orderList.CustomerId" />
+            <input type="hidden" asp-for="Order.Id" value="@orderList.Id" />
+                <td>
+                    <button type="submit" class="btn btn-primary" asp-action="GetOrder">Order details</button>
+                </td>
+           
+        </tr>
+        </form>
+        }
+        else
+        {
+            <form method="get" >
+                <tr class="table-success">
+                    <td> @orderList.CustomerFirstName  @orderList.CustomerLastName </td>
+                    <td>@orderList.CreatedAt</td>
+
+                    <td>  @orderList.NumberOfOrderLines</td>
+                    <td class="text-success"> YES </td>
+                    <input type="hidden" asp-for="extraInfo" value="true" />
+                    <input type="hidden" asp-for="@Model.Customer.Id" value="@orderList.CustomerId" />
+                    <input type="hidden" asp-for="@Model.Order.Id" value="@orderList.Id" />
+                    <td>
+                        <button type="submit" class="btn btn-primary" asp-action="GetOrder">Details</button>
+                    </td>
+
+                </tr>
+            </form>
+        }
+
+
+    }
+    </table>
+    </div>
+</div>

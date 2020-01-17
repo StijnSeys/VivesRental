@@ -71,6 +71,7 @@ namespace RentalFrontend.Controllers
                 Product = true
             };
 
+            //for scan articleId
             if (model.Article != null)
             {
                 var article = _articleService.Get(model.Article.Id, includes);
@@ -116,8 +117,10 @@ namespace RentalFrontend.Controllers
             IList<Guid> articleIdS = articles.Select(article => article.Id).ToList();
             _orderLineService.Rent(model.Order.Id, articleIdS);
 
-            _databaseContext.Articles = new List<Article>(); 
-            
+            _databaseContext.Articles = new List<Article>();
+
+           
+
             return RedirectToAction("CustomerDetails", "Customer", new {CustomerID = model.Customer.Id});
 
         }
@@ -130,6 +133,22 @@ namespace RentalFrontend.Controllers
             var orderLines = _orderLineService.FindByOrderId(model.Order.Id);
             model.Order = order;
             model.OrderLines = orderLines;
+
+     
+
+            return View(model);
+        }
+
+        [HttpGet]
+
+        public IActionResult OrderList()
+        {
+
+            var model = new CustomerOrderViewModel();
+
+           var orderResults =  _orderService.AllResult();
+
+           model.OrderResults = orderResults;
 
             return View(model);
         }
@@ -158,6 +177,22 @@ namespace RentalFrontend.Controllers
             _orderLineService.Return(orderLineId, dateTime);
 
             return RedirectToAction("CustomerDetails", "Customer", new {CustomerID = model.Customer.Id});
+        }
+
+        [HttpPost]
+        public IActionResult ReturnFullOrder(CustomerOrderViewModel model)
+        {
+            var dateTime = DateTime.Now;
+
+            _orderService.Return(model.Order.Id, dateTime);
+
+            if (model.extraInfo)
+            {
+              return  RedirectToAction("OrderList");
+            }
+
+            return RedirectToAction("CustomerDetails", "Customer", new { CustomerID = model.Customer.Id });
+
         }
     }
 }

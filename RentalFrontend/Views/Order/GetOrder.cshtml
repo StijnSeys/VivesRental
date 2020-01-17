@@ -1,22 +1,35 @@
 ﻿@model CustomerOrderViewModel
-
-<h4>ID: @Model.Order.Id </h4>
-
-<div class="list-group">
-    @foreach (var orderLine in Model.OrderLines)
-    {
-        <div>
-            <p>Article: @orderLine.ProductName</p>
-        </div>
-
-        @if (orderLine.ReturnedAt.HasValue)
+    <div class="mb-5">
+        <h4 style="text-align: center">Order Info </h4>
+    </div>
+<div class="container">
+    <ul class="list-group">
+        @foreach (var orderLine in Model.OrderLines)
         {
-            <p style="color: green"> Returned: @orderLine.ReturnedAt</p>
-        }
-        else
-        {
-            <p style="color: red"> Expires: @orderLine.ExpiresAt</p>
-        }
-    }
 
+            @if (orderLine.ReturnedAt.HasValue)
+            {
+                <li class="list-group-item list-group-item-success">
+                     <p> @orderLine.ProductName</p>
+                    <p> Returned : @orderLine.ReturnedAt</p>
+                </li>
+            }
+            else
+            {
+                <li class="list-group-item list-group-item-danger" >
+                    <p> @orderLine.ProductName</p>
+                    <p> Expires: @orderLine.ExpiresAt</p>
+                </li>
+            }
+        }
+    </ul>
+    <div>
+        <form method="post" asp-controller="Order" asp-action="ReturnFullOrder">
+            <input type="hidden" asp-for="extraInfo" value="@Model.extraInfo" />
+            <input type="hidden" asp-for="Customer.Id" value="@Model.Customer.Id"/>
+            <input type="hidden" asp-for="Order.Id" value="@Model.Order.Id"/>
+            <span style="float: right"> <button type="submit" class="btn-lg btn-primary">Return Order</button></span>
+        </form>
+
+    </div>
 </div>

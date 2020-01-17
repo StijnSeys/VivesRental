@@ -26,10 +26,19 @@ namespace RentalFrontend.Controllers
         public IActionResult CustomerList()
         {
             var customers = _customerService.All();
+           
+
+        //    foreach (var customer in customers)
+         //   {
+         //      = _orderService.FindByCustomerIdResult(customer.Id);
+
+       //     }
+
             var model = new CustomerOrderViewModel
             {
                 AllCustomers = customers
             };
+
             return View(model);
         }
 

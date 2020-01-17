@@ -1,10 +1,12 @@
 ﻿@model VivesRental.Model.Customer
-
-<h1>Edit</h1>
-
+    <div>
+        <h3 style="text-align: center">Create customer</h3>
+    </div>
 <form method="post">
     <partial name="CreateEditCustomerPartial" model="Model"/>
-
-    <input type="submit" class="btn btn-primary" value="Create"/>
-
+    <div class="row text-center">
+        <div class="col-12">
+            <input type="submit" class="btn-lg btn-success" value="Create"/>
+        </div>
+    </div>
 </form>

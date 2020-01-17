@@ -32,7 +32,7 @@
 
 <div class="jumbotron container">
     <div class="container text-center">
-        <h1>Vives Rental</h1>
+        <h1 class="font-weight-bold text-danger">Vives Rental</h1>
     </div>
 </div>
 
@@ -43,20 +43,22 @@
             <form method="get">
                 <div class="panel panel-heading">
 
-                    <div class="panel-heading" style="text-align: center">Customer Login</div>
+                    <div class="panel-heading font-weight-bold" style=" text-align: center  "> Customer Login</div>
                     <div class="panel-body">
                         <button type="submit" class="border-0  bg-white" asp-controller="Customer" asp-action="CustomerDetails">
                             <img src="login.png" class="img-responsive" style="width: 100%" alt="Image">
                         </button>
                     </div>
-                    <div class="panel-footer ">
+                    <div class="panel-footer text-center bg-white ">
                         <label asp-for="CustomerId">Scan CustomerId:</label>
                         <input type="text" asp-for="CustomerId" value="" />
+                        @if (@Model.Error == 1)
+                        {
+                            <p class="text-danger">@Model.Message</p>
+                        
+                        }
                     </div>
-                    @if (@Model.Error == 1)
-                    {
-                        <span class="text-danger">@Model.Message</span>
-                    }
+               
                 </div>
             </form>
         </div>
@@ -68,9 +70,9 @@
         <div class="col-sm-4">
             <form method="get">
                 <div class="panel panel-heading">
-                    <div class="panel-heading" style="text-align: center">Order Beheer</div>
+                    <div class="panel-heading font-weight-bold" style="text-align: center">Order management </div>
                     <div class="panel-body">
-                        <button type="submit" class="border-0 bg-white" asp-controller="Order" asp-action="">
+                        <button type="submit" class="border-0 bg-white" asp-controller="Order" asp-action="OrderList">
                             <img src="order.png" class="img-responsive" style="width: 100%" alt="Image">
                         </button>
                     </div>
@@ -80,7 +82,7 @@
         <div class="col-sm-4">
 
             <div class="panel panel-heading">
-                <div class="panel-heading" style="text-align: center">Customer Beheer</div>
+                <div class="panel-heading font-weight-bold" style="text-align: center">Customer  management</div>
                 <div class="panel-body">
                     <a asp-controller="Customer" asp-action="CustomerList">
                         <img src="Customers.png" class="img-responsive" style="width: 100%" alt="Image">
@@ -90,7 +92,7 @@
         </div>
         <div class="col-sm-4">
             <div class="panel panel-heading">
-                <div class="panel-heading" style="text-align: center">Stock Beheer</div>
+                <div class="panel-heading font-weight-bold" style="text-align: center">Stock  management</div>
                 <div class="panel-body">
                     <a asp-controller="Product" asp-action="Index">
                         <img src="inventory.png" class="img-responsive" style="width: 100%" alt="Image">

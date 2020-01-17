@@ -20,7 +20,7 @@ namespace RentalFrontend.Controllers
             {
                 CustomerOrderViewModel vm = new CustomerOrderViewModel()
                 {
-                    Message = "Customer not found",
+                    Message = "Customer not found!",
                     Error = customerFound
                 };
 

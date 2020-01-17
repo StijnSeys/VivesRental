@@ -37,7 +37,7 @@
 <div class="mt-4">
     <h5 style="text-align: center">Personal Orders: </h5>
 </div>
-<div class="pre-scrollable">
+<div class="pre-scrollable"  style="max-height: 60vh">
     <div class="container">
        
         <div class="row p-5 " >
@@ -57,7 +57,9 @@
                     <div class="col-5 rounded border p-3 mt-3" style="background-color: lightcoral">
                         <form>
                             <p style="text-align: center">Not fully returned</p>
+                               <input type="hidden" asp-for="Customer.Id" value="@Model.Customer.Id" />
                             <label asp-for="Order.Id">Order Id:</label>
+                         
                             <input type="text" readonly class="form-control-plaintext" asp-for="Order.Id" value="@order.Id" />
                             <label for="createTime">Created:</label>
                             <input type="text" readonly class="form-control-plaintext" id="createTime" value="@order.CreatedAt" />
@@ -71,6 +73,7 @@
                         <form>
                             <p style="text-align: center">Returned</p>
                             <label asp-for="Order.Id">ID:</label>
+                            <input type="hidden" asp-for="Customer.Id" value="@Model.Customer.Id"/>
                             <input type="text" readonly class="form-control-plaintext" asp-for="Order.Id" value="@order.Id" />
                             <label for="createTime">Created:</label>
                             <input type="text" readonly class="form-control-plaintext" id="createTime" value="@order.CreatedAt" />

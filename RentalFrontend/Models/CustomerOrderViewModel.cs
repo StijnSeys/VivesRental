@@ -9,12 +9,11 @@ namespace RentalFrontend.Models
     public class CustomerOrderViewModel
     {
 
-        public bool IsTrue { get; set; }
+        public bool extraInfo { get; set; }
+
         public int Error { get; set; }
         public string Message { get; set; }
         public Guid CustomerId { get; set; }
-
-        public IList<ProductResult> ProductResults { get; set; }
 
         public Customer Customer { get; set; }
 
@@ -23,6 +22,9 @@ namespace RentalFrontend.Models
         public Article Article { get; set; }
 
         public Product Product { get; set; }
+        public IList<OrderResult> OrderResults { get; set; }
+
+        public IList<ProductResult> ProductResults { get; set; }
 
         public IList<Article> AvailableArticles { get; set; }
 
