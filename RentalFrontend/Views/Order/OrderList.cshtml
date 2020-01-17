@@ -20,7 +20,7 @@
         <th>
             Articles
         </th>
-        <th>
+        <th class="text-center">
             Articles returned
         </th>
         <th>
@@ -38,14 +38,14 @@
             <td>@orderList.CreatedAt</td>
 
             <td>  @orderList.NumberOfOrderLines</td>
-            <td >
+            <td class=" text-center" >
                 NO
             </td>
             <input type="hidden" asp-for="extraInfo" value="true"/>
             <input type="hidden" asp-for="Customer.Id" value="@orderList.CustomerId" />
             <input type="hidden" asp-for="Order.Id" value="@orderList.Id" />
-                <td>
-                    <button type="submit" class="btn btn-primary" asp-action="GetOrder">Order details</button>
+                <td class="text-right">
+                    <button type="submit" class=" btn btn-primary" asp-action="GetOrder">Order details</button>
                 </td>
            
         </tr>
@@ -59,12 +59,12 @@
                     <td>@orderList.CreatedAt</td>
 
                     <td>  @orderList.NumberOfOrderLines</td>
-                    <td class="text-success"> YES </td>
+                    <td class="text-success text-center"> YES </td>
                     <input type="hidden" asp-for="extraInfo" value="true" />
                     <input type="hidden" asp-for="@Model.Customer.Id" value="@orderList.CustomerId" />
                     <input type="hidden" asp-for="@Model.Order.Id" value="@orderList.Id" />
-                    <td>
-                        <button type="submit" class="btn btn-primary" asp-action="GetOrder">Details</button>
+                    <td class="text-right">
+                        <button type="submit" class=" btn btn-primary" asp-action="GetOrder">Order details</button>
                     </td>
 
                 </tr>

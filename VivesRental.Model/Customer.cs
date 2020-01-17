@@ -21,5 +21,6 @@ namespace VivesRental.Model
         public string PhoneNumber { get; set; }
 
         public IList<Order> Orders { get; set; }
+
     }
 }

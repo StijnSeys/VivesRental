@@ -1,7 +1,7 @@
 ﻿@model CustomerOrderViewModel
-
-<h3 style="text-align: center">Order: @Model.Customer.FirstName @Model.Customer.LastName</h3>
-
+    <div class="mb-5">
+        <h3 style="text-align: center">New order for:  @Model.Customer.FirstName  @Model.Customer.LastName</h3>
+    </div>
 <div class="container">
     <div class="row">
         <div class="col-6">
@@ -27,8 +27,8 @@
     </div>
 </div>
 <div>
-    <div class="m-5">
-        <h4>Beschikbare Producten:</h4>
+    <div class="m-5 text-center">
+        <h4>Available articles:</h4>
     </div>
     <div class=" pre-scrollable">
         <div class="container">
@@ -41,7 +41,7 @@
                             <input type="hidden" asp-for="@Model.Product.Id" value="@product.Id"/>
                             <button type="submit" class=" btn btn-primary">
                                 @product.Name
-                                <p>Beschikbaar: @product.NumberOfAvailableArticles</p>
+                                <p>Amount: @product.NumberOfAvailableArticles</p>
                             </button>
 
                         </form>
@@ -52,21 +52,21 @@
 
     </div>
 </div>
-<div class="mt-5">
-    <h4>Bestelling voor: @Model.Customer.FirstName @Model.Customer.LastName</h4>
+<div class="mt-5 text-center">
+    <h4>Order articles:</h4>
 </div>
 <div class="list-group ">
     @if (Model.OrderArticles == null)
     {
-    <p class="list-group-item">Geen Articles</p>
+    <p class="list-group-item">Empty</p>
     }
     else if (Model.OrderArticles.Count == 0)
     {
-    <p class="list-group-item">Geen Articles</p>
+    <p class="list-group-item">Empty</p>
     }
     else
     {
-        <div>
+        <div class="mb-2">
             <form method="post">
                 <input type="hidden" asp-for="@Model.Customer.Id" value="@Model.Customer.Id"/>
                 <span class="float-right">
@@ -78,7 +78,7 @@
             <div class="row">
                 @foreach (var article in Model.OrderArticles)
                 {
-                    <div class="col-3">
+                    <div class="col-2">
                         <form>
                             <input type="hidden" asp-for="@Model.Customer.Id" value="@Model.Customer.Id" />
                             <input type="hidden" asp-for="@Model.Article.Id" value="@article.Id" />

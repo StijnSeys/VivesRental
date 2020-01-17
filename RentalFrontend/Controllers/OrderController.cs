@@ -72,7 +72,7 @@ namespace RentalFrontend.Controllers
             };
 
             //for scan articleId
-            if (model.Article != null)
+            if (model.Article!= null)
             {
                 var article = _articleService.Get(model.Article.Id, includes);
                 articleList.Add(article);
@@ -85,9 +85,19 @@ namespace RentalFrontend.Controllers
 
                 var articlesAvailable = list.Except(articleList).ToList();
 
-                var orderArticle = articlesAvailable.FirstOrDefault();
+                if (articlesAvailable.Count == 0)
+                {
+                    var message = "This product is out of stock";
+                    TempData["FeedbackMessage"] = message;
 
-                articleList.Add(orderArticle);
+                }
+                else
+                {
+                    var orderArticle = articlesAvailable.FirstOrDefault();
+
+                    articleList.Add(orderArticle);
+                }
+
             }
 
             model.OrderArticles = articleList;
@@ -119,7 +129,8 @@ namespace RentalFrontend.Controllers
 
             _databaseContext.Articles = new List<Article>();
 
-           
+            var message = "Order created";
+            TempData["FeedbackMessage"] = message;
 
             return RedirectToAction("CustomerDetails", "Customer", new {CustomerID = model.Customer.Id});
 
@@ -159,7 +170,7 @@ namespace RentalFrontend.Controllers
             var dateTime = DateTime.Now;
 
 
-            //No easy way??
+            //No easy way  13/01??
             var includes = new ArticleIncludes
             {
                 OrderLines = true
@@ -176,6 +187,9 @@ namespace RentalFrontend.Controllers
 
             _orderLineService.Return(orderLineId, dateTime);
 
+            var message = "Article returned";
+            TempData["FeedbackMessage"] = message;
+
             return RedirectToAction("CustomerDetails", "Customer", new {CustomerID = model.Customer.Id});
         }
 
@@ -186,6 +200,8 @@ namespace RentalFrontend.Controllers
 
             _orderService.Return(model.Order.Id, dateTime);
 
+            var message = "Order returned";
+            TempData["FeedbackMessage"] = message;
             if (model.extraInfo)
             {
               return  RedirectToAction("OrderList");

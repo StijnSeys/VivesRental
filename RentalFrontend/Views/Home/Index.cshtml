@@ -3,30 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Front page</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
-        /* Remove the navbar's default rounded borders and increase the bottom margin */
-        .navbar {
-            border-radius: 0;
-            margin-bottom: 50px;
-        }
-
-        /* Remove the jumbotron's default bottom margin */
-
-        .jumbotron { margin-bottom: 0; }
-
-        /* Add a gray background color and some padding to the footer */
-
-        footer {
-            background-color: #f2f2f2;
-            padding: 10px;
-        }
-    </style>
+ 
 </head>
 <body>
 
@@ -36,9 +13,9 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container mb-5 mb-5">
     <div class="row ">
-        <div class="col-sm-4"></div>
+        <div class="col-sm-4"><div class="text-info">* Scan text fields should not be editable in project</div></div>
         <div class="col-sm-4">
             <form method="get">
                 <div class="panel panel-heading">
@@ -82,7 +59,7 @@
         <div class="col-sm-4">
 
             <div class="panel panel-heading">
-                <div class="panel-heading font-weight-bold" style="text-align: center">Customer  management</div>
+                <div class="panel-heading font-weight-bold mb-5" style="text-align: center">Customer  management</div>
                 <div class="panel-body">
                     <a asp-controller="Customer" asp-action="CustomerList">
                         <img src="Customers.png" class="img-responsive" style="width: 100%" alt="Image">

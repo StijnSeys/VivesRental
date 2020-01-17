@@ -63,13 +63,35 @@
 
 </div>
 
-
-<h6>Rent History:</h6>
+<div>
+    <h5 class="mt-5" style="text-align: center">Rent History:</h5>
+</div>
 <div class="pre-scrollable">
+    <ul class="list-group">
+        @foreach (var orderLine in Model.Article.OrderLines.OrderByDescending(orderLine => orderLine.RentedAt))
+        {
+            if (@orderLine.ReturnedAt.HasValue)
+            {
+                <li class="list-group-item list-group-item-success">
+                    <div>Rented by: @orderLine.Order.CustomerFirstName @orderLine.Order.CustomerLastName</div>
+                    <div class="row">
+                        <div class="col-4">Rented at: @orderLine.RentedAt</div>
+                        <div class="col-4">Returned at: @orderLine.RentedAt</div>
+                    </div>
+                </li>
+            }
+            else
+            {
+                <li class="list-group-item list-group-item-danger">
+                    <div>Rented by: @orderLine.Order.CustomerFirstName @orderLine.Order.CustomerLastName</div>
+                    <div class="row">
+                        <div class="col-4">Rented at: @orderLine.RentedAt</div>
+                        <div class="col-4">NOT RETURNED</div>
+                    </div>
+                </li>
 
-    @foreach (var orderLine in Model.Article.OrderLines)
-    {
-        <p>@orderLine.Order.CustomerFirstName @orderLine.Order.CustomerLastName</p>
-        <p>@orderLine.RentedAt</p>
-    }
+            }
+
+        }
+    </ul>
 </div>

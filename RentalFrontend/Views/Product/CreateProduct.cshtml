@@ -1,13 +1,13 @@
 ﻿@model VivesRental.Model.Product
 
-
-<h1>Create new product</h1>
-
+    <div>
+        <h3 style="text-align: center">Create new product</h3>
+    </div>
 
 <form method="post">
 
     <partial name="CreateProductPartial" model="Model"/>
-
-    <input type="submit" class="btn btn-primary" value="opslaan"/>
-
+    <div class="text-center">
+    <input type="submit" class="btn-lg btn-success" value="Create product"/>
+    </div>
 </form>

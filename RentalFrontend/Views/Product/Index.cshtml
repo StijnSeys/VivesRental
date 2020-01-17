@@ -1,8 +1,15 @@
 ﻿@model ArticleViewModel
 
-@{
-    ViewData["Title"] = "Index";
-}
+<div class="container  mb-3 text-center">
+    @if (TempData["FeedBackMessage"] != null && !string.IsNullOrWhiteSpace(TempData["FeedBackMessage"].ToString()))
+    {
+        <div class="text-success col-12 ">
+            <h6>
+                @TempData["FeedbackMessage"]
+            </h6>
+        </div>
+    }
+</div>
 
 <div class="container row p-0 m-0">
     <div class="col-4">
@@ -16,7 +23,7 @@
         </form>
     </div>
     <div class="col-3">
-        <a class="btn btn-primary" asp-action="CreateProduct">New Product</a>
+        <a class="btn-lg btn-success" asp-action="CreateProduct">New Product</a>
     </div>
     <div class="col-12 border p-3 mt-3 pre-scrollable" style="max-height: 75vh">
 

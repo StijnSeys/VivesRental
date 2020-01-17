@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using RentalFrontend.Models;
 using VivesRental.Model;
+using VivesRental.Repository.Includes;
+using VivesRental.Repository.Results;
 using VivesRental.Services.Contracts;
 
 namespace RentalFrontend.Controllers
@@ -26,14 +28,6 @@ namespace RentalFrontend.Controllers
         public IActionResult CustomerList()
         {
             var customers = _customerService.All();
-           
-
-        //    foreach (var customer in customers)
-         //   {
-         //      = _orderService.FindByCustomerIdResult(customer.Id);
-
-       //     }
-
             var model = new CustomerOrderViewModel
             {
                 AllCustomers = customers
@@ -82,19 +76,21 @@ namespace RentalFrontend.Controllers
         {
             if (!ModelState.IsValid) return View(customer);
 
+
+
             _customerService.Create(customer);
 
+            var message = "Customer created";
+            TempData["FeedbackMessage"] = message;
             return RedirectToAction("CustomerList");
         }
 
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
-            var product = _customerService.Get(id);
+            var customer = _customerService.Get(id);
 
-            if (product == null) return RedirectToAction("CustomerList");
-
-            return View(product);
+            return View(customer);
         }
 
         [HttpPost]
@@ -104,7 +100,11 @@ namespace RentalFrontend.Controllers
 
             _customerService.Edit(customer);
 
-            return RedirectToAction("CustomerList");
+            var model = new CustomerOrderViewModel();
+            model.CustomerId = customer.Id;
+            var message = "Customer edited";
+            TempData["FeedbackMessage"] = message;
+            return RedirectToAction("CustomerDetails", model);
         }
 
         [HttpPost]
@@ -112,6 +112,8 @@ namespace RentalFrontend.Controllers
         {
             _customerService.Remove(customer.Id);
 
+            var message = "Customer deleted";
+            TempData["FeedbackMessage"] = message;
             return RedirectToAction("CustomerList");
         }
     }

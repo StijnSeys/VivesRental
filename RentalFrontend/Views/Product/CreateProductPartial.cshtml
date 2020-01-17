@@ -6,26 +6,26 @@
 
 <div class="form-group">
     <label asp-for="Name">Naam</label>
-    <input asp-for="Name" type="text" class="form-control">
+    <input asp-for="Name" type="text" class="form-control" required>
     <span asp-validation-for="Name" class="text-danger"></span>
 </div>
 <div class="form-group">
     <label asp-for="Description">Beschrijving</label>
-    <input asp-for="Description" type="text" class="form-control">
+    <input asp-for="Description" type="text" class="form-control" required>
     <span asp-validation-for="Description" class="text-danger"></span>
 </div>
 <div class="form-group">
     <label asp-for="Manufacturer">Manufacturer</label>
-    <input asp-for="Manufacturer" type="text" class="form-control">
+    <input asp-for="Manufacturer" type="text" class="form-control" required>
     <span asp-validation-for="Description" class="text-danger"></span>
 </div>
 <div class="form-group">
     <label asp-for="Publisher">Publisher</label>
-    <input asp-for="Publisher" type="text" class="form-control">
+    <input asp-for="Publisher" type="text" class="form-control" required>
     <span asp-validation-for="Publisher" class="text-danger"></span>
 </div>
 <div class="form-group">
-    <label asp-for="RentalExpiresAfterDays">Expires after?</label>
-    <input asp-for="RentalExpiresAfterDays" type="number" class="form-group">
+    <label asp-for="RentalExpiresAfterDays">Days before product expires:</label>
+    <input asp-for="RentalExpiresAfterDays" type="number" min="1"  class="form-group" required>
     <span asp-validation-for="RentalExpiresAfterDays" class="text-danger"></span>
 </div>

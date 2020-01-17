@@ -65,6 +65,9 @@ namespace RentalFrontend.Controllers
 
             _productService.Create(product);
 
+            var message = "Product created";
+            TempData["FeedbackMessage"] = message;
+
             return RedirectToAction("Index");
         }
 
@@ -81,11 +84,17 @@ namespace RentalFrontend.Controllers
         [HttpPost]
         public IActionResult Edit(Product product)
         {
-            if (!ModelState.IsValid) return View(product);
+            
 
             _productService.Edit(product);
 
-            return RedirectToAction("Index");
+            var model = new ArticleViewModel();
+            model.ProductId = product.Id;
+
+            var message = "Product edited";
+            TempData["FeedbackMessage"] = message;
+
+            return RedirectToAction("ProductDetails", model);
         }
 
         [HttpPost]
@@ -93,6 +102,8 @@ namespace RentalFrontend.Controllers
         {
             _productService.Remove(id);
 
+            var message = "Product removed";
+            TempData["FeedbackMessage"] = message;
             return RedirectToAction("Index");
         }
     }

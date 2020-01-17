@@ -34,9 +34,10 @@ namespace RentalFrontend.Controllers
             foreach (var orderline in article.OrderLines)
             {
                 var order = _orderService.Get(orderline.OrderId);
+                
                 orderline.Order = order;
             }
-
+            
             model.Article = article;
 
             return View(model);
@@ -56,6 +57,8 @@ namespace RentalFrontend.Controllers
 
             for (var i = 0; i < model.Count; i++) _articleService.Create(article);
 
+            var message = "Articles created";
+            TempData["FeedbackMessage"] = message;
 
             return RedirectToAction("ProductDetails", "Product", new {ProductId = model.Product.Id});
         }
@@ -67,6 +70,9 @@ namespace RentalFrontend.Controllers
 
             if (model.FromGetArticle) return RedirectToAction("GetArticle", model);
 
+            var message = "Status updated";
+            TempData["FeedbackMessage"] = message;
+
             return RedirectToAction("ProductDetails", "Product", new {ProductId = model.Product.Id});
         }
 
@@ -75,6 +81,8 @@ namespace RentalFrontend.Controllers
         public IActionResult Delete(ArticleViewModel model)
         {
             _articleService.Remove(model.ArticleId);
+            var message = "Article removed";
+            TempData["FeedbackMessage"] = message;
 
             return RedirectToAction("ProductDetails", "Product", new {ProductId = model.Product.Id});
         }

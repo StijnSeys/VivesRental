@@ -1,39 +1,42 @@
 ﻿@using VivesRental.Model
 @model ArticleViewModel
 <!DOCTYPE html>
-<head>
-    <link rel="stylesheet" href="~/css/site.css"/>
-</head>
+
 <body>
-<h1 style="text-align: center">Product details</h1>
+<h3 style="text-align: center">Product details</h3>
+    
 
-<div class="row">
+<div class="container">
 
-    <div class="card-columns ">
-
-        <div class="card bg-info ">
+    <div class="row ">
+        
+        <div class="col-4">
             <h5 class="card-title" style="text-align: center">@Model.Product.Name</h5>
-            <p class="card-text">
-                Discription: @Model.Product.Description
-            </p>
-            <p class="card-text">
-                Manufacturer: @Model.Product.Manufacturer
-            </p>
-            <p class="card-text">
-                Publisher: @Model.Product.Publisher
-            </p>
+            <label for="descript">Description:</label>
+            <div id="descript">
+                 @Model.Product.Description
+            </div>
+        </div>
+        <div class="col-5 ">
 
-            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Product.Id">Bewerken</a>
-
+            <div class="m-2">
+                Manufacturer:    @Model.Product.Manufacturer
+            </div>
+            <div class="m-2">
+                Publisher:    @Model.Product.Publisher
+            </div>
+            <div class="text-center">
+            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Product.Id">Edit product</a>
+           </div>
         </div>
 
 
-        <div class="flex-column">
-            <div class="card bg-info  float-right">
+        <div class="col-3">
+            <div class="card bg-success  float-right">
                 <form method="post">
 
-                    <label asp-for="Count">Add extra articles:</label>
-                    <input asp-for="Count" type="number" placeholder="Aantal?" class="form-control"/>
+                    <label asp-for="Count">Add new articles to stock:</label>
+                    <input asp-for="Count" type="number" min="0" value="" placeholder="Aantal?" class="form-control"/>
                     <input type="hidden" asp-for="Product.Id" value="@Model.Product.Id"/>
 
                     <input type="submit" class="btn btn-primary" value="Create" asp-controller="Article" asp-action="CreateArticle"/>
@@ -45,7 +48,7 @@
 </div>
 
 <div class="col-12 border p-3 mt-3 ">
-    <div class="table-sroller table-wrapper-scroll-y">
+    <div class="pre-scrollable" style="max-height: 60vh">
         <table class="table table-striped border table-sm ">
             <thead>
             <tr class="table-secondary">
