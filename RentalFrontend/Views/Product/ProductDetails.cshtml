@@ -11,37 +11,39 @@
     <div class="row ">
         
         <div class="col-4">
-            <h5 class="card-title" style="text-align: center">@Model.Product.Name</h5>
-            <label for="descript">Description:</label>
+            <h4 class="card-title  text-info" style="text-align: center">@Model.Product.Name</h4>
+            <label class="font-weight-bold" for="descript">Description:</label>
             <div id="descript">
                  @Model.Product.Description
             </div>
         </div>
-        <div class="col-5 ">
-
-            <div class="m-2">
-                Manufacturer:    @Model.Product.Manufacturer
+        <div class="col-4 ">
+            <label class="font-weight-bold" for="manu">Manufacturer:</label>
+            <div class="m-2 text-center" id="manu">
+                @Model.Product.Manufacturer
             </div>
-            <div class="m-2">
-                Publisher:    @Model.Product.Publisher
+            <label class="font-weight-bold" for="publ">Publisher: </label>
+            <div class="m-2 text-center" id="publ" >
+                   @Model.Product.Publisher
             </div>
-            <div class="text-center">
-            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Product.Id">Edit product</a>
-           </div>
         </div>
-
-
-        <div class="col-3">
-            <div class="card bg-success  float-right">
+        <div class="col-4 text-right">
+            <div class="container">
+            <div class="card bg-success float-right mb-3">
                 <form method="post">
 
                     <label asp-for="Count">Add new articles to stock:</label>
-                    <input asp-for="Count" type="number" min="0" value="" placeholder="Aantal?" class="form-control"/>
-                    <input type="hidden" asp-for="Product.Id" value="@Model.Product.Id"/>
+                    <input asp-for="Count" type="number" min="0" value="" placeholder="Aantal?" class="form-control" />
+                    <input type="hidden" asp-for="Product.Id" value="@Model.Product.Id" />
 
-                    <input type="submit" class="btn btn-primary" value="Create" asp-controller="Article" asp-action="CreateArticle"/>
+                    <input type="submit" class="btn btn-primary" value="Create" asp-controller="Article" asp-action="CreateArticle" />
 
                 </form>
+
+            </div>
+            <div >
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Product.Id">Edit product</a>
+            </div>
             </div>
         </div>
     </div>

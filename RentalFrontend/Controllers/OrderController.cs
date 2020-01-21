@@ -80,6 +80,7 @@ namespace RentalFrontend.Controllers
             // when clicked on order article button
             else
             {
+
                 var availableArticle = _articleService.GetAvailableArticles(includes);
                 IList<Article> list = availableArticle.Where(article => article.ProductId == model.Product.Id).ToList();
 
